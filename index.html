@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rémi SEIDITA — CV</title>
+  <style>
+:root{
+  --so-orange:#f48024; /* --so-orange:#D8771C; */
+  --so-green:#4b8352;
+  --so-blue:#0077cc; --so-blue-light:#e1ecf4; --so-blue-border:#7aa7c7;
+  --aws-blue:var(--so-blue);
+  --ink:#232629; --muted:#525960; --line:#d6d9dc; --bg:#ffffff;
+  --tag-bg:var(--so-blue-light); --tag-border:var(--so-blue-border);
+}
+
+/* Base */
+*{box-sizing:border-box;}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";}
+a{color:var(--so-blue);text-decoration:none;} a:hover{text-decoration:underline;}
+.container{max-width:1024px;margin:28px auto 48px;padding:0 24px;}
+
+/* Header */
+header{display:grid;grid-template-columns:1fr 160px;gap:24px;align-items:center;padding-bottom:20px;}
+.title{display:flex;flex-direction:column;gap:8px;width:100%;}
+.title h1{font-size:34px;line-height:1.1;margin:0;letter-spacing:.3px;font-weight:800;}
+.subtitle{color:var(--muted);font-weight:600;}
+.contact-box{
+  border:0;border-radius:10px;background:#fff;font-size:13px;color:var(--muted);
+  display:flex;flex-direction:column;align-items:flex-start;gap:2px;line-height:1.35;margin-top:10px;
+  padding:8px 12px;margin-left:-12px;max-width:calc(63% + 12px);
+}
+.contact-box a:hover{text-decoration:underline;}
+.contact-box span:first-child::before{content:"";margin:0;}
+.avatar{width:160px;height:160px;border-radius:16px;overflow:hidden;border:2px solid var(--line);background:#f8fafc;}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+
+/* Sections */
+section{padding:8px 0 !important;}
+section+section{margin-top:6px !important;}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.section-head h2{font-family:"Source Sans Pro","Segoe UI","Roboto","Helvetica Neue",Arial,sans-serif;
+  font-size:15px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--so-orange);margin:0;}
+.section-head .bar{flex:1;height:2px;background:var(--line);}
+/* Réduction de l'espacement vertical entre sections */
+section { padding:4px 0 !important; }
+section + section { margin-top:2px !important; }
+
+/* Espace encore plus serré avant Projets / Réalisations */
+.section-head { margin-bottom:10px !important; }
+
+.card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#f3f8ff;}
+
+/* ===========================
+   GRID / TILES (générique)
+   =========================== */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch;}
+.grid .tile{display:flex;flex-direction:column;}
+.tile{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;}
+
+/* Titres de tuiles — alignés partout (même hauteur, centrage vertical) */
+.grid .tile>h3{
+  height:56px;               /* même gabarit → alignement horizontal garanti */
+  display:flex;align-items:center;justify-content:center;
+  margin:0 0 8px;line-height:1.25;font-size:16px;font-weight:800;text-align:center;
+}
+
+/* Barres + niveaux */
+.grid .tile .bar{margin:0 0 10px;width:100%;}
+.level{color:var(--muted);font-size:12px;margin-bottom:8px;font-weight:600;}
+
+/* Barres de progression (contraste écran + PDF) */
+.bar{height:6px;background:#d0d4da;border:1px solid #b3b9c2;border-radius:999px;
+  overflow:hidden;margin-bottom:10px;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);}
+.bar>i{display:block;height:100%;width:72%;background:linear-gradient(90deg,#3d7c45 0%,#4b8352 100%);}
+
+/* Chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{border:1px solid var(--tag-border);background:var(--tag-bg);color:#2c5777;
+  padding:4px 8px;border-radius:3px;font-size:12px;font-weight:400;}
+
+/* ===========================
+   COMPACTAGE — COMPÉTENCES uniquement
+   (1) c’est la 1ʳᵉ grille de la page
+   (2) on réduit le gabarit de titre et le padding pour gagner en hauteur
+   =========================== */
+.grid:first-of-type .tile>h3{height:48px;margin:0 0 6px;line-height:1.18;}
+.grid:first-of-type .tile{padding:10px 12px;}
+.grid:first-of-type .tile .bar{margin:0 0 8px;}
+.grid:first-of-type .chips{gap:6px;}
+
+/* Layout 2 colonnes (écran) */
+.twocol{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;}
+
+/* Expériences */
+.exp{display:grid;gap:12px;}
+.job{border-left:3px solid var(--so-orange);padding-left:12px;}
+.job h3{margin:0;font-size:15px;font-weight:800;}
+.job .where{color:var(--muted);font-weight:600;}
+.job ul{margin:8px 0 0 16px;padding:0;}
+.job li{margin:4px 0;}
+
+/* Footer */
+footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center;}
+
+/* ===========================
+   Responsive
+   =========================== */
+@media screen and (max-width:900px){
+  .grid{grid-template-columns:1fr 1fr;}
+  .twocol{grid-template-columns:1fr;}
+  header{grid-template-columns:1fr;}
+  .avatar{order:-1;justify-self:start;}
+}
+@media screen and (max-width:600px){
+  .grid{grid-template-columns:1fr;}
+}
+
+/* ===========================
+   Impression (A4)
+   =========================== */
+@media print{
+  @page{size:A4;margin:10mm;}
+  .container{max-width:920px;margin:0 auto;padding:0 8px;}
+  header{display:flex !important;flex-direction:row !important;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;}
+  header .title{flex:1 1 auto;order:0 !important;}
+  header .avatar{width:140px;height:140px;flex:0 0 140px;order:0 !important;margin-left:20px !important;}
+  header,.contact-box{break-inside:avoid;page-break-inside:avoid;}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  /* Colonne expériences plus large à l’impression */
+  .twocol{grid-template-columns:.85fr 1.15fr !important;gap:12px !important;}
+  .job ul{margin:6px 0 0 14px !important;}
+  .job li{line-height:1.35 !important;}
+
+  /* Tuiles & chips un peu plus compactes pour tenir en 1 page */
+  .tile{padding:6px 8px !important;}
+  .grid{gap:8px !important;}
+  .chips{gap:4px !important;}
+  .chip{font-size:9pt !important;padding:1px 5px !important;line-height:1.2 !important;border-color:#cdd6e0 !important;}
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title">
+        <h1>Rémi SEIDITA</h1>
+      <div class="contact-box">
+        <div>📍 146 ch des Résiniers — 84120 Mirabeau</div>
+        <div><a href="mailto:seidita.remi.perso@gmail.com">✉️ seidita.remi.perso@gmail.com</a></div>
+        <div><a href="tel:+33609511179">📞 (+33) 6 09 51 11 79</a></div>
+        <div><a href="https://www.linkedin.com/in/remi-seidita-40b38915a" target="_blank">🔗 linkedin.com/in/remi-seidita-40b38915a</a></div>
+      </div>
+      </div>
+      <div class="avatar"><img src="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=400&d=mm" alt="Rémi SEIDITA" /></div>
+    </header>
+
+    <section>
+      <div class="section-head"><h2>Présentation</h2><div class="bar"></div></div>
+      <div class="card">
+        <p>Ingénieur DevOps passionné par <strong>Linux</strong> et l’industrialisation des systèmes, j’aide les entreprises à concevoir et déployer des plateformes <strong>fiables</strong> et <strong>performantes</strong>. Depuis quinze ans, j’ai travaillé sur des environnements hébergés localement (on-premise) puis sur la modernisation et la migration vers le <strong>cloud AWS</strong>. Calme, méthodique et patient, j’accorde une attention particulière à la stabilité, à la qualité du code et à la résilience des infrastructures. Aujourd’hui, je suis ingénieur DevOps au sein du groupe <strong>AVIV</strong> 🏠.</p>
+      </div>
+    </section>
+
+    <section class="twocol">
+      <div>
+        <div class="section-head"><h2>Compétences</h2><div class="bar"></div></div>
+        <p style="color:var(--muted); font-size:12px; margin:4px 0 10px;">
+        Les barres indiquent le niveau de maîtrise global par catégorie.
+        </p>
+        <div class="grid">
+          <div class="tile"><h3>DevOps & Infra as Code</h3><div class="bar"><i style="width:90%"></i></div><div class="chips"><span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">Terraform</span><span class="chip">CloudFormation</span><span class="chip">Docker</span><span class="chip">EKS</span><span class="chip">Rancher</span><span class="chip">Ansible</span><span class="chip">Puppet</span><span class="chip">Foreman</span><span class="chip">Git</span><span class="chip">CircleCI</span></div></div>
+          <div class="tile"><h3>Système d'Exploitation</h3><div class="bar"><i style="width:90%"></i></div><div class="chips"><span class="chip">RedHat/CentOS</span><span class="chip">Debian/Ubuntu</span><span class="chip">Windows</span></div></div>
+          <div class="tile"><h3>Développement</h3><div class="bar"><i style="width:90%"></i></div><div class="chips"><span class="chip">HCL</span><span class="chip">Python</span><span class="chip">Ruby</span><span class="chip">Shell/Bash</span><span class="chip">PowerShell</span></div></div>
+          <div class="tile"><h3>Web & CDN</h3><div class="bar"><i style="width:80%"></i></div><div class="chips"><span class="chip">CloudFront</span><span class="chip">S3 Static</span><span class="chip">Apache</span><span class="chip">Nginx</span><span class="chip">JBoss</span></div></div>
+          <div class="tile"><h3>Réseau & Sécurité</h3><div class="bar"><i style="width:70%"></i></div><div class="chips"><span class="chip">Juniper / Checkpoint</span><span class="chip">Meinberg Lantime</span><span class="chip">DataDome</span><span class="chip">OpenTrust PKI </span><span class="chip">Nessus/OpenScap </span></div></div>
+          <div class="tile"><h3>Supervision & Observabilité</h3><div class="bar"><i style="width:75%"></i></div><div class="chips"><span class="chip">Datadog</span><span class="chip">Zabbix</span><span class="chip">IBM Tivoli</span></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-head"><h2>Expériences</h2><div class="bar"></div></div>
+        <div class="exp">
+          <div class="job"><h3>Ingénieur DevOps Sénior — <a href="https://www.aviv-group.com">AVIV Group </a><span class="where"> (2022 – Aujourd’hui)</span></h3><ul><li>Gestion de l’infrastructure (AWS Cloud)</li><li>Conception de modules <strong>Terraform</strong> réutilisables</li><li>Gestion des correctifs et des CVE</li><li>Supervision <strong>Datadog</strong>, gestion d’incidents N3.</li><li>Rédaction de documentation technique</li></ul></div>
+          <div class="job"><h3>Ingénieur SRE — <a href="https://www.yousign.com">Yousign </a><span class="where"> (2022)</span></h3><ul><li>Gestion d’infrastructure (VMWare NSX ~ 330 VM).</li><li>Conception de rôles Ansible et de modules Terraform (IaC)</li><li>Supervision <strong>Datadog</strong>, gestion d’incidents N3</li><li>Rédaction de documentation technique</li></ul></div>
+          <div class="job"><h3>Ingénieur Systèmes — <a href="https://www.groupeadsn.fr">Groupe ADSN </a><span class="where"> (2015 – 2022)</span></h3><ul><li>Gestion d’infrastructure (VMWare ~ 2300 VM)</li><li>Conception de modules Puppet et rôles Ansible (IaC)</li><li>Administration réseau (switchs, routeurs, pare-feux, Lantime)</li><li>Gestion du stockage (HP 3PAR, HP IBRIX X9000)</li><li>Développement de scripts (Shell/Python/Ruby/PowerShell)</li><li>Gestion des incidents (N3)</li><li>Projet de sécurité (conformité eIDAS)</li></ul></div>
+          <div class="job"><h3>Ingénieur DevOps — <a href="https://www.numvision.com">Numvision</a><span class="where"> (2014 - 2015)</span></h3><ul><li>Gestion du SI.</li><li>Conception de modules Puppet</li><li>Gestion du stockage</li><li>Mise en place d’un outil de ticketing (OS Ticket)</li><li>Supervision, gestion des incidents (N1/N2)</li></ul></div>
+          <p style="color:var(--muted); font-size:12px; margin-top:3px;">Les expériences antérieures sont disponibles sur mon profil <a href="https://www.linkedin.com/in/remi-seidita-40b38915a">LinkedIn</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="twocol">
+      <div>
+        <div class="section-head"><h2>Projets / Réalisations</h2><div class="bar"></div></div>
+        <div class="grid">
+          <div class="tile"><h3>Routage web unifié (AVIV)</h3><p style="margin:6px 0 0; color:var(--muted)">Module Terraform et application web interne pour le routage CloudFront + Lambda@Edge multi-marques, offrant visibilité, inventaire automatisé et optimisation SEO.</p></div>
+          <div class="tile"><h3>Migration de Logic-Immo vers AWS (AVIV)</h3><p style="margin:6px 0 0; color:var(--muted)">Conception et migration de l’infrastructure hébergée chez Orange Cloud vers AWS, avec refonte des environnements, automatisation Terraform et intégration CI/CD.</p></div>
+          <div class="tile"><h3>Migration vers AWS (ADNOV)</h3><p style="margin:6px 0 0; color:var(--muted)">Participation à la conception d’une infrastructure cloud AWS, avec mutualisation et standardisation des services.</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-head"><h2>Formations & Langues</h2><div class="bar"></div></div>
+        <div class="tile"><ul style="margin:0 0 4px 8px; padding-left:14px;"><li>BTS Informatique de Gestion (ARLE) - <a href="https://ecolepratique.com/">Groupe École Pratique</a>.</li><li>Baccalauréat STI Génie Électronique - <a href="https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/">Lycée Pierre Mendès France</a>.</li></ul><p style="margin:8px 0 0 8px; color:var(--muted); font-size:13px;">Langues : Français (natif), Anglais (intermédiaire)</p></div>
+      </div>
+    </section>
+
+    <footer>
+    </footer>
+  </div>
+</body>
+</html>
