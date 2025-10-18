@@ -43,6 +43,7 @@ section+section{margin-top:6px !important;}
 .section-head h2{font-family:"Source Sans Pro","Segoe UI","Roboto","Helvetica Neue",Arial,sans-serif;
   font-size:15px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--so-orange);margin:0;}
 .section-head .bar{flex:1;height:2px;background:var(--line);}
+
 /* Réduction de l'espacement vertical entre sections */
 section { padding:4px 0 !important; }
 section + section { margin-top:2px !important; }
@@ -101,6 +102,12 @@ section + section { margin-top:2px !important; }
 .job ul{margin:8px 0 0 16px;padding:0;}
 .job li{margin:4px 0;}
 
+.tile.education {
+  display: block;
+  text-align: left;
+  padding: 10px 14px;
+}
+
 /* Footer */
 footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center;}
 
@@ -152,6 +159,7 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center;}
         <div><a href="mailto:seidita.remi.perso@gmail.com">✉️ seidita.remi.perso@gmail.com</a></div>
         <div><a href="tel:+33609511179">📞 (+33) 6 09 51 11 79</a></div>
         <div><a href="https://www.linkedin.com/in/remi-seidita-40b38915a" target="_blank">🔗 linkedin.com/in/remi-seidita-40b38915a</a></div>
+        <div><a href="https://meries.github.io/cv-html/" target="_blank">📄 https://meries.github.io/cv-html/</a></div>
       </div>
       </div>
       <div class="avatar"><img src="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=400&d=mm" alt="Rémi SEIDITA" /></div>
@@ -183,10 +191,9 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center;}
       <div>
         <div class="section-head"><h2>Expériences</h2><div class="bar"></div></div>
         <div class="exp">
-          <div class="job"><h3>Ingénieur DevOps Sénior — <a href="https://www.aviv-group.com">AVIV Group </a><span class="where"> (2022 – Aujourd’hui)</span></h3><ul><li>Gestion de l’infrastructure (AWS Cloud)</li><li>Conception de modules <strong>Terraform</strong> réutilisables</li><li>Gestion des correctifs et des CVE</li><li>Supervision <strong>Datadog</strong>, gestion d’incidents N3.</li><li>Rédaction de documentation technique</li></ul></div>
-          <div class="job"><h3>Ingénieur SRE — <a href="https://www.yousign.com">Yousign </a><span class="where"> (2022)</span></h3><ul><li>Gestion d’infrastructure (VMWare NSX ~ 330 VM).</li><li>Conception de rôles Ansible et de modules Terraform (IaC)</li><li>Supervision <strong>Datadog</strong>, gestion d’incidents N3</li><li>Rédaction de documentation technique</li></ul></div>
-          <div class="job"><h3>Ingénieur Systèmes — <a href="https://www.groupeadsn.fr">Groupe ADSN </a><span class="where"> (2015 – 2022)</span></h3><ul><li>Gestion d’infrastructure (VMWare ~ 2300 VM)</li><li>Conception de modules Puppet et rôles Ansible (IaC)</li><li>Administration réseau (switchs, routeurs, pare-feux, Lantime)</li><li>Gestion du stockage (HP 3PAR, HP IBRIX X9000)</li><li>Développement de scripts (Shell/Python/Ruby/PowerShell)</li><li>Gestion des incidents (N3)</li><li>Projet de sécurité (conformité eIDAS)</li></ul></div>
-          <div class="job"><h3>Ingénieur DevOps — <a href="https://www.numvision.com">Numvision</a><span class="where"> (2014 - 2015)</span></h3><ul><li>Gestion du SI.</li><li>Conception de modules Puppet</li><li>Gestion du stockage</li><li>Mise en place d’un outil de ticketing (OS Ticket)</li><li>Supervision, gestion des incidents (N1/N2)</li></ul></div>
+          <div class="job"><h3>Ingénieur DevOps Sénior — <a href="https://www.aviv-group.com">AVIV Group </a><span class="where"> (2022 – Aujourd’hui)</span></h3><ul><li>Gestion de l’infrastructure AWS / Orange Cloud</li><li>Conception de modules Terraform et de stacks CloudFormation réutilisables</li><li>Mise en place de chaînes CI/CD avec CircleCI</li><li>Supervision Datadog, gestion d’incidents N3.</li><li>Suivi automatique SEO / Perf via Lighthouse intégré au CI/CD</li><li>Rédaction de documentation technique</li></ul></div>
+          <div class="job"><h3>Ingénieur SRE — <a href="https://www.yousign.com">Yousign </a><span class="where"> (2022)</span></h3><ul><li>Gestion d’infrastructure VMWare NSX / AWS / Azure.</li><li>Conception de rôles Ansible et de modules Terraform (IaC)</li><li>Supervision Datadog, gestion d’incidents N3</li><li>Rédaction de documentation technique</li></ul></div>
+          <div class="job"><h3>Ingénieur Systèmes — <a href="https://www.groupeadsn.fr">Groupe ADSN </a><span class="where"> (2015 – 2022)</span></h3><ul><li>Gestion d’infrastructure VMWare / AWS</li><li>Conception de modules IaC (Terraform, Puppet, Ansible)</li><li>Mise en place de chaînes CI/CD avec Gitlab</li><li>Administration réseau (switchs, routeurs, pare-feux, Lantime)</li><li>Gestion du stockage (HP 3PAR, HP IBRIX X9000)</li><li>Développement de scripts (Shell/Python/Ruby/PowerShell)</li><li>Gestion des correctifs et des CVE</li><li>Supervision avec Tivoli et Zabbix, gestion d’incidents N3</li><li>Conception d’une infrastructure sécurisée dans le cadre d’un projet de conformité eIDAS</li><li>Rédaction de documentation technique</li></ul></div>
           <p style="color:var(--muted); font-size:12px; margin-top:3px;">Les expériences antérieures sont disponibles sur mon profil <a href="https://www.linkedin.com/in/remi-seidita-40b38915a">LinkedIn</a>.</p>
         </div>
       </div>
@@ -197,13 +204,23 @@ footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center;}
         <div class="section-head"><h2>Projets / Réalisations</h2><div class="bar"></div></div>
         <div class="grid">
           <div class="tile"><h3>Routage web unifié (AVIV)</h3><p style="margin:6px 0 0; color:var(--muted)">Module Terraform et application web interne pour le routage CloudFront + Lambda@Edge multi-marques, offrant visibilité, inventaire automatisé et optimisation SEO.</p></div>
-          <div class="tile"><h3>Migration de Logic-Immo vers AWS (AVIV)</h3><p style="margin:6px 0 0; color:var(--muted)">Conception et migration de l’infrastructure hébergée chez Orange Cloud vers AWS, avec refonte des environnements, automatisation Terraform et intégration CI/CD.</p></div>
-          <div class="tile"><h3>Migration vers AWS (ADNOV)</h3><p style="margin:6px 0 0; color:var(--muted)">Participation à la conception d’une infrastructure cloud AWS, avec mutualisation et standardisation des services.</p></div>
+          <div class="tile"><h3>Migration AWS (AVIV)</h3><p style="margin:6px 0 0; color:var(--muted)">Conception et migration de l’infrastructure hébergée chez Orange Cloud vers AWS, avec refonte des environnements, automatisation Terraform et intégration CI/CD.</p></div>
+          <div class="tile"><h3>Migration AWS (ADNOV)</h3><p style="margin:6px 0 0; color:var(--muted)"> Conception et migration de l'infrastructure hébergée chez IBM vers AWS, incluant la construction de la landing zone et la standardisation des services.</p></div>
         </div>
       </div>
       <div>
         <div class="section-head"><h2>Formations & Langues</h2><div class="bar"></div></div>
-        <div class="tile"><ul style="margin:0 0 4px 8px; padding-left:14px;"><li>BTS Informatique de Gestion (ARLE) - <a href="https://ecolepratique.com/">Groupe École Pratique</a>.</li><li>Baccalauréat STI Génie Électronique - <a href="https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/">Lycée Pierre Mendès France</a>.</li></ul><p style="margin:8px 0 0 8px; color:var(--muted); font-size:13px;">Langues : Français (natif), Anglais (intermédiaire)</p></div>
+        <div class="tile" style="margin-bottom:12px;">
+          <ul style="margin:6px 0 0;padding-left:18px;">
+            <li>BTS Informatique de Gestion (ARLE) - <a href="https://ecolepratique.com/">Groupe École Pratique</a>.</li>
+            <li>Baccalauréat STI Génie Électronique - <a href="https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/">Lycée Pierre Mendès France</a>.</li>
+          </ul>
+        </div>
+        <div class="tile education">
+          <div class="chips">
+            <span>🇫🇷 Français (natif) - 🇬🇧 Anglais (Professionnel)</span>
+          </div>
+        </div>
       </div>
     </section>
 
