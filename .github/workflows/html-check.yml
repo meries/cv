@@ -22,5 +22,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate HTML with vnu (validator.nu)
         run: |
-          docker run --rm -v "${{ github.workspace }}:/site" ghcr.io/validator/validator:latest \
-            java -jar /vnu.jar --skip-non-html --errors-only --asciiquotes --also-check-css /site
+          docker run --rm \
+            -v "${{ github.workspace }}:/site" \
+            --workdir /site \
+            ghcr.io/validator/validator:latest \
+            /vnu-runtime-image/bin/vnu \
+              --skip-non-html --errors-only --asciiquotes --also-check-css .
