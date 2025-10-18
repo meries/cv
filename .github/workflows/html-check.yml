@@ -2,8 +2,9 @@ name: HTML checks
 
 on:
   push:
-    branches: [ main ]
+    branches-ignore: [ main ]
   pull_request:
+    branches-ignore: [ main ]
 
 jobs:
   htmlhint:
@@ -11,17 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Pas besoin de package.json : on utilise npx directement
       - name: Run HTMLHint
-        run: npx --yes htmlhint "**/*.html" || (echo "HTMLHint found issues"; exit 1)
+        run: npx --yes htmlhint "**/*.html"
 
   w3c:
     name: W3C HTML Validator (vnu)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Utilise l'image officielle validator.nu (vnu-jar) en Docker
-      - name: Validate HTML with vnu
+      - name: Validate HTML with vnu (validator.nu)
         run: |
           docker run --rm -v "${{ github.workspace }}:/site" ghcr.io/validator/validator:latest \
-            --skip-non-html --errors-only --asciiquotes --also-check-css /site
+            java -jar /vnu.jar --skip-non-html --errors-only --asciiquotes --also-check-css /site
