@@ -1,0 +1,30 @@
+name: HTML checks
+
+on:
+  push:
+    branches-ignore: [ main ]
+  pull_request:
+    branches-ignore: [ main ]
+
+jobs:
+  htmlhint:
+    name: HTMLHint (lint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run HTMLHint
+        run: npx --yes htmlhint "**/*.html"
+
+  w3c:
+    name: W3C HTML Validator (vnu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate HTML with vnu (validator.nu)
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/site" \
+            --workdir /site \
+            ghcr.io/validator/validator:latest \
+            /vnu-runtime-image/bin/vnu \
+              --skip-non-html --errors-only --asciiquotes --also-check-css .
