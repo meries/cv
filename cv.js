@@ -1,4 +1,4 @@
-// cv.js (avec génération dynamique complète : menu, skills, expériences, projets)
+// lang.js (avec génération dynamique complète : menu, skills, expériences, projets)
 (async () => {
   // 1) Promesse DOM prêt
   const domReady = new Promise((resolve) => {
@@ -170,9 +170,21 @@
 
   // 7) Initialisation + écouteur du sélecteur
   
-  // Lire le paramètre de langue depuis l'URL (?lang=en ou ?lang=fr)
+  // Lire les paramètres depuis l'URL
   const urlParams = new URLSearchParams(window.location.search);
   const langFromUrl = urlParams.get('lang');
+  const isPrintMode = urlParams.get('print') === 'true';
+  
+  // Si mode impression, masquer le sélecteur de langue
+  if (isPrintMode) {
+    const langSelector = document.querySelector('.lang-floating');
+    if (langSelector) {
+      langSelector.style.display = 'none';
+      langSelector.style.visibility = 'hidden';
+      langSelector.style.opacity = '0';
+    }
+    console.log('[i18n] Mode impression activé - sélecteur masqué');
+  }
   
   // Priorité : URL > localStorage > config.yml
   const initial = langFromUrl || localStorage.getItem("cv-lang") || cfg.lang || "fr";
