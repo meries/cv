@@ -5,8 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rémi SEIDITA — CV</title>
   <link rel="stylesheet" href="stylesheet.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script defer src="cv.js"></script>
 </head>
 <body>
+  <div class="lang-top">
+    <!-- Le select sera rempli dynamiquement depuis config.yml -->
+    <select id="lang-select" aria-label="Langue"></select>
+  </div>
   <div class="container">
     <header>
       <div class="title">
@@ -23,59 +29,42 @@
     </header>
 
     <section>
-      <div class="section-head"><h2>Présentation</h2><div class="bar"></div></div>
-      <div class="card">
-        <p>Ingénieur DevOps passionné par <strong>Linux</strong> et l’industrialisation des systèmes, j’aide les entreprises à concevoir et déployer des plateformes <strong>fiables</strong> et <strong>performantes</strong>. Depuis quinze ans, j’ai travaillé sur des environnements hébergés localement (on-premise) puis sur la modernisation et la migration vers le <strong>cloud AWS</strong>. Calme, méthodique et patient, j’accorde une attention particulière à la stabilité, à la qualité du code et à la résilience des infrastructures. Aujourd’hui, je travaille au sein du groupe <strong>AVIV</strong>, où je contribue à la conception et à l’évolution des architectures cloud multi-marques.</p>
+      <div class="section-head"><h2 data-i18n="presentation">Présentation</h2><div class="bar"></div></div>
+      <div class="card" data-i18n="about">
+        <p>Ingénieur DevOps passionné par <strong>Linux</strong> et l'industrialisation des systèmes, j'aide les entreprises à concevoir et déployer des plateformes <strong>fiables</strong> et <strong>performantes</strong>. Depuis quinze ans, j'ai travaillé sur des environnements hébergés localement (on-premise) puis sur la modernisation et la migration vers le <strong>cloud AWS</strong>. Calme, méthodique et patient, j'accorde une attention particulière à la stabilité, à la qualité du code et à la résilience des infrastructures. Aujourd'hui, je travaille au sein du groupe <strong>AVIV</strong>, où je contribue à la conception et à l'évolution des architectures cloud multi-marques.</p>
       </div>
     </section>
 
     <section class="twocol">
       <div>
-        <div class="section-head"><h2>Compétences</h2><div class="bar"></div></div>
-        <p style="color:var(--muted); font-size:12px; margin:4px 0 10px;">
-        Les barres indiquent le niveau de maîtrise global par catégorie.
+        <div class="section-head"><h2 data-i18n="skills">Compétences</h2><div class="bar"></div></div>
+        <p id="skills-note" style="color:var(--muted); font-size:12px; margin:4px 0 10px;">
+          Les barres indiquent le niveau de maîtrise global par catégorie.
         </p>
-        <div class="grid">
-          <div class="tile"><h3>DevOps & Infra as Code</h3><div class="bar"><i style="width:90%"></i></div><div class="chips"><span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">Terraform</span><span class="chip">CloudFormation</span><span class="chip">Docker</span><span class="chip">EKS</span><span class="chip">Rancher</span><span class="chip">Ansible</span><span class="chip">Puppet</span><span class="chip">Foreman</span><span class="chip">Git</span><span class="chip">CircleCI</span></div></div>
-          <div class="tile"><h3>Système d'Exploitation</h3><div class="bar"><i style="width:90%"></i></div><div class="chips"><span class="chip">RedHat/CentOS</span><span class="chip">Debian/Ubuntu</span><span class="chip">Windows</span></div></div>
-          <div class="tile"><h3>Développement</h3><div class="bar"><i style="width:90%"></i></div><div class="chips"><span class="chip">HCL</span><span class="chip">Python</span><span class="chip">Ruby</span><span class="chip">Shell/Bash</span><span class="chip">PowerShell</span></div></div>
-          <div class="tile"><h3>Web & CDN</h3><div class="bar"><i style="width:80%"></i></div><div class="chips"><span class="chip">CloudFront</span><span class="chip">WAF</span><span class="chip">S3 Static</span><span class="chip">Apache</span><span class="chip">Nginx</span><span class="chip">JBoss</span></div></div>
-          <div class="tile"><h3>Réseau & Sécurité</h3><div class="bar"><i style="width:70%"></i></div><div class="chips"><span class="chip">Juniper / Checkpoint</span><span class="chip">Meinberg Lantime</span><span class="chip">DataDome</span><span class="chip">OpenTrust PKI </span><span class="chip">Nessus/OpenScap </span></div></div>
-          <div class="tile"><h3>Supervision & Observabilité</h3><div class="bar"><i style="width:75%"></i></div><div class="chips"><span class="chip">Datadog</span><span class="chip">Zabbix</span><span class="chip">IBM Tivoli</span></div></div>
-        </div>
+        <!-- Les compétences seront générées dynamiquement -->
+        <div id="skills-list" class="grid"></div>
       </div>
 
       <div>
-        <div class="section-head"><h2>Expériences</h2><div class="bar"></div></div>
-        <div class="exp">
-          <div class="job"><h3>Ingénieur DevOps Senior — <a href="https://www.aviv-group.com">AVIV Group </a><span class="where"> (2022 – Aujourd’hui)</span></h3><ul><li>Gestion de l’infrastructure AWS / Orange Cloud</li><li>Conception de modules Terraform et de stacks CloudFormation</li><li>Mise en place de chaînes CI/CD avec CircleCI</li><li>Supervision Datadog, gestion d’incidents N3.</li><li>Suivi automatisé des performances et du SEO via Lighthouse intégré aux pipelines CI/CD.</li><li>Rédaction de documentation technique</li></ul></div>
-          <div class="job"><h3>Ingénieur SRE — <a href="https://www.yousign.com">Yousign </a><span class="where"> (2022)</span></h3><ul><li>Gestion d’infrastructure VMWare NSX / AWS / Azure.</li><li>Conception de rôles Ansible et de modules Terraform (IaC)</li><li>Supervision Datadog, gestion d’incidents N3</li><li>Rédaction de documentation technique</li></ul></div>
-          <div class="job"><h3>Ingénieur Systèmes — <a href="https://www.groupeadsn.fr">Groupe ADSN </a><span class="where"> (2015 – 2022)</span></h3><ul><li>Gestion d’infrastructure VMWare / AWS</li><li>Conception de modules IaC (Terraform, Puppet, Ansible)</li><li>Mise en place de chaînes CI/CD avec Gitlab</li><li>Administration réseau (switchs, routeurs, pare-feux, Lantime)</li><li>Gestion du stockage (HP 3PAR, HP IBRIX X9000)</li><li>Développement de scripts (Shell/Python/Ruby/PowerShell)</li><li>Gestion des correctifs et des CVE</li><li>Supervision avec Tivoli et Zabbix, gestion d’incidents N3</li><li>Conception d’une infrastructure sécurisée dans le cadre d’un projet de conformité eIDAS</li><li>Rédaction de documentation technique</li></ul></div>
-          <p style="color:var(--muted); font-size:12px; margin-top:3px;">Les expériences antérieures sont disponibles sur mon profil <a href="https://www.linkedin.com/in/remi-seidita-40b38915a">LinkedIn</a>.</p>
-        </div>
+        <div class="section-head"><h2 data-i18n="experience">Expériences</h2><div class="bar"></div></div>
+        <!-- Les expériences seront générées dynamiquement -->
+        <div id="experience-list" class="exp"></div>
       </div>
     </section>
 
     <section class="twocol">
       <div>
-        <div class="section-head"><h2>Projets / Réalisations</h2><div class="bar"></div></div>
-        <div class="grid">
-          <div class="tile"><h3>Routage web unifié (AVIV)</h3><p style="margin:6px 0 0; color:var(--muted)">Conception d'un module Terraform et d'une application web interne pour le routage CloudFront + Lambda@Edge multi-marques, offrant visibilité, inventaire automatisé et optimisation SEO.</p></div>
-          <div class="tile"><h3>Migration AWS (AVIV)</h3><p style="margin:6px 0 0; color:var(--muted)">Migration des environnements Orange Cloud vers AWS : CloudFront / Load Balancer + ECS ou Lambda, Jenkins, Solr, RDS Aurora et réseau (VPC, SG, routage).</p></div>
-          <div class="tile"><h3>Migration AWS (ADNOV)</h3><p style="margin:6px 0 0; color:var(--muted)">Conception et migration de l'infrastructure hébergée chez IBM vers AWS, incluant la construction de la Landing Zone (avec SETRA) et la standardisation des services.</p></div>
-        </div>
+        <div class="section-head"><h2 data-i18n="projects">Projets / Réalisations</h2><div class="bar"></div></div>
+        <!-- Les projets seront générés dynamiquement -->
+        <div id="projects-list" class="grid"></div>
       </div>
       <div>
-        <div class="section-head"><h2>Formations & Langues</h2><div class="bar"></div></div>
-        <div class="tile" style="margin-bottom:12px;">
-          <ul style="margin:6px 0 0;padding-left:18px;">
-            <li>BTS Informatique de Gestion (ARLE) - <a href="https://ecolepratique.com/">Groupe École Pratique</a>.</li>
-            <li>Baccalauréat STI Génie Électronique - <a href="https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/">Lycée Pierre Mendès France</a>.</li>
-          </ul>
-        </div>
+        <div class="section-head"><h2 data-i18n="education">Formations & Langues</h2><div class="bar"></div></div>
+        <!-- L'éducation sera générée dynamiquement -->
+        <div class="tile" id="education-list" style="margin-bottom:12px;"></div>
         <div class="tile education">
           <div class="chips">
-            <span>
+            <span id="lang-line">
               <img class="flag" src="assets/flags/fr.svg" alt="FR">Français (natif) — 
               <img class="flag" src="assets/flags/gb.svg" alt="GB">Anglais (professionnel)
             </span>

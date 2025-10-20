@@ -1,143 +1,493 @@
-:root{
-  --so-orange:#f48024; /* --so-orange:#D8771C; */
-  --so-green:#4b8352;
-  --so-blue:#0077cc; --so-blue-light:#e1ecf4; --so-blue-border:#7aa7c7;
-  --aws-blue:var(--so-blue);
-  --ink:#232629; --muted:#525960; --line:#d6d9dc; --bg:#ffffff;
-  --tag-bg:var(--so-blue-light); --tag-border:var(--so-blue-border);
+/* ===========================
+   VARIABLES CSS
+   =========================== */
+:root {
+  /* Couleurs principales */
+  --so-orange: #f48024;
+  --so-green: #4b8352;
+  --so-blue: #0077cc;
+  --so-blue-light: #e1ecf4;
+  --so-blue-border: #7aa7c7;
+  --aws-blue: var(--so-blue);
+  
+  /* Couleurs de texte */
+  --ink: #232629;
+  --muted: #525960;
+  
+  /* Couleurs de structure */
+  --line: #d6d9dc;
+  --bg: #ffffff;
+  
+  /* Tags/Chips */
+  --tag-bg: var(--so-blue-light);
+  --tag-border: var(--so-blue-border);
 }
-
-/* Base */
-*{box-sizing:border-box;}
-html,body{margin:0;background:var(--bg);color:var(--ink);
-  font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji";}
-a{color:var(--so-blue);text-decoration:none;} a:hover{text-decoration:underline;}
-.container{max-width:1024px;margin:28px auto 48px;padding:0 24px;}
-
-/* Header */
-header{display:grid;grid-template-columns:1fr 160px;gap:24px;align-items:center;padding-bottom:20px;}
-.title{display:flex;flex-direction:column;gap:8px;width:100%;}
-.title h1{font-size:34px;line-height:1.1;margin:0;letter-spacing:.3px;font-weight:800;}
-.subtitle{color:var(--muted);font-weight:600;}
-.contact-box{
-  border:0;border-radius:10px;background:#fff;font-size:13px;color:var(--muted);
-  display:flex;flex-direction:column;align-items:flex-start;gap:2px;line-height:1.35;margin-top:10px;
-  padding:8px 12px;margin-left:-12px;max-width:calc(63% + 12px);
-}
-.contact-box a:hover{text-decoration:underline;}
-.contact-box span:first-child::before{content:"";margin:0;}
-.avatar{width:160px;height:160px;border-radius:16px;overflow:hidden;border:2px solid var(--line);background:#f8fafc;}
-.avatar img{width:100%;height:100%;object-fit:cover;}
-
-/* Sections */
-section{padding:8px 0 !important;}
-section+section{margin-top:6px !important;}
-.section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.section-head h2{font-family:"Source Sans Pro","Segoe UI","Roboto","Helvetica Neue",Arial,sans-serif;
-  font-size:15px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--so-orange);margin:0;}
-.section-head .bar{flex:1;height:2px;background:var(--line);}
-
-/* Réduction de l'espacement vertical entre sections */
-section { padding:4px 0 !important; }
-section + section { margin-top:2px !important; }
-
-/* Espace encore plus serré avant Projets / Réalisations */
-.section-head { margin-bottom:10px !important; }
-
-.card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#f3f8ff;}
 
 /* ===========================
-   GRID / TILES (générique)
+   RESET & BASE
    =========================== */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch;}
-.grid .tile{display:flex;flex-direction:column;}
-.tile{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;}
-
-/* Titres de tuiles — alignés partout (même hauteur, centrage vertical) */
-.grid .tile>h3{
-  height:56px;               /* même gabarit → alignement horizontal garanti */
-  display:flex;align-items:center;justify-content:center;
-  margin:0 0 8px;line-height:1.25;font-size:16px;font-weight:800;text-align:center;
+* {
+  box-sizing: border-box;
 }
 
-/* Barres + niveaux */
-.grid .tile .bar{margin:0 0 10px;width:100%;}
-.level{color:var(--muted);font-size:12px;margin-bottom:8px;font-weight:600;}
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
 
-/* Barres de progression (contraste écran + PDF) */
-.bar{height:6px;background:#d0d4da;border:1px solid #b3b9c2;border-radius:999px;
-  overflow:hidden;margin-bottom:10px;box-shadow:inset 0 1px 2px rgba(0,0,0,.08);}
-.bar>i{display:block;height:100%;width:72%;background:linear-gradient(90deg,#3d7c45 0%,#4b8352 100%);}
+a {
+  color: var(--so-blue);
+  text-decoration: none;
+}
 
-/* Chips */
-.chips{display:flex;flex-wrap:wrap;gap:8px;}
-.chip{border:1px solid var(--tag-border);background:var(--tag-bg);color:#2c5777;
-  padding:4px 8px;border-radius:3px;font-size:12px;font-weight:400;}
+a:hover {
+  text-decoration: underline;
+}
 
 /* ===========================
-   COMPACTAGE — COMPÉTENCES uniquement
-   (1) c’est la 1ʳᵉ grille de la page
-   (2) on réduit le gabarit de titre et le padding pour gagner en hauteur
+   LAYOUT GÉNÉRAL
    =========================== */
-.grid:first-of-type .tile>h3{height:48px;margin:0 0 6px;line-height:1.18;}
-.grid:first-of-type .tile{padding:10px 12px;}
-.grid:first-of-type .tile .bar{margin:0 0 8px;}
-.grid:first-of-type .chips{gap:6px;}
+.container {
+  max-width: 1024px;
+  margin: 28px auto 48px;
+  padding: 0 24px;
+}
 
-/* Layout 2 colonnes (écran) */
-.twocol{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;}
-.flag{width:1em;height:1em;vertical-align:-0.15em;margin:0 .25em 0 .15em}
+/* ===========================
+   HEADER
+   =========================== */
+header {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 24px;
+  align-items: center;
+  padding-bottom: 20px;
+}
 
-/* Expériences */
-.exp{display:grid;gap:12px;}
-.job{border-left:3px solid var(--so-orange);padding-left:12px;}
-.job h3{margin:0;font-size:15px;font-weight:800;}
-.job .where{color:var(--muted);font-weight:600;}
-.job ul{margin:8px 0 0 16px;padding:0;}
-.job li{margin:4px 0;}
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
 
+.title h1 {
+  font-size: 34px;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: 0.3px;
+  font-weight: 800;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.contact-box {
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  line-height: 1.35;
+  margin-top: 10px;
+  padding: 8px 12px;
+  margin-left: -12px;
+  max-width: calc(63% + 12px);
+}
+
+.contact-box a:hover {
+  text-decoration: underline;
+}
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid var(--line);
+  background: #f8fafc;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===========================
+   SÉLECTEUR DE LANGUE
+   =========================== */
+.lang-top {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  z-index: 10;
+}
+
+.lang-top select {
+  appearance: none;
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  border-radius: 8px;
+  padding: 3px 8px 3px 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 20px;
+}
+
+.lang-top select:hover {
+  background: #f8f9fb;
+  border-color: var(--so-blue-border);
+}
+
+/* ===========================
+   SECTIONS
+   =========================== */
+section {
+  padding: 4px 0 !important;
+}
+
+section + section {
+  margin-top: 2px !important;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px !important;
+}
+
+.section-head h2 {
+  font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--so-orange);
+  margin: 0;
+}
+
+.section-head .bar {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+}
+
+/* Layout deux colonnes */
+.twocol {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+}
+
+/* ===========================
+   COMPOSANTS - CARDS & TILES
+   =========================== */
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: #f3f8ff;
+}
+
+.tile {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
+/* ===========================
+   GRILLES
+   =========================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.grid .tile {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titres de tuiles - alignement uniforme */
+.grid .tile > h3 {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 8px;
+  line-height: 1.25;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* ===========================
+   BARRES DE PROGRESSION
+   =========================== */
+.bar {
+  height: 6px;
+  background: #d0d4da;
+  border: 1px solid #b3b9c2;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.bar > i {
+  display: block;
+  height: 100%;
+  width: 72%;
+  background: linear-gradient(90deg, #3d7c45 0%, #4b8352 100%);
+}
+
+.grid .tile .bar {
+  margin: 0 0 10px;
+  width: 100%;
+}
+
+.level {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* ===========================
+   CHIPS / TAGS
+   =========================== */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 1px solid var(--tag-border);
+  background: var(--tag-bg);
+  color: #2c5777;
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+/* ===========================
+   COMPÉTENCES (compactage)
+   =========================== */
+.grid:first-of-type .tile > h3 {
+  height: 48px;
+  margin: 0 0 6px;
+  line-height: 1.18;
+}
+
+.grid:first-of-type .tile {
+  padding: 10px 12px;
+}
+
+.grid:first-of-type .tile .bar {
+  margin: 0 0 8px;
+}
+
+.grid:first-of-type .chips {
+  gap: 6px;
+}
+
+/* ===========================
+   EXPÉRIENCES
+   =========================== */
+.exp {
+  display: grid;
+  gap: 12px;
+}
+
+.job {
+  border-left: 3px solid var(--so-orange);
+  padding-left: 12px;
+}
+
+.job h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.job .where {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.job ul {
+  margin: 8px 0 0 16px;
+  padding: 0;
+}
+
+.job li {
+  margin: 4px 0;
+}
+
+/* ===========================
+   ÉDUCATION & LANGUES
+   =========================== */
 .tile.education {
   display: block;
   text-align: left;
   padding: 10px 14px;
 }
 
-/* Footer */
-footer{margin-top:20px;color:var(--muted);font-size:12px;text-align:center;}
-
-/* ===========================
-   Responsive
-   =========================== */
-@media screen and (max-width:900px){
-  .grid{grid-template-columns:1fr 1fr;}
-  .twocol{grid-template-columns:1fr;}
-  header{grid-template-columns:1fr;}
-  .avatar{order:-1;justify-self:start;}
-}
-@media screen and (max-width:600px){
-  .grid{grid-template-columns:1fr;}
+.flag {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  margin: 0 0.25em 0 0.15em;
 }
 
 /* ===========================
-   Impression (A4)
+   FOOTER
    =========================== */
-@media print{
-  @page{size:A4;margin:10mm;}
-  .container{max-width:920px;margin:0 auto;padding:0 8px;}
-  header{display:flex !important;flex-direction:row !important;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;}
-  header .title{flex:1 1 auto;order:0 !important;}
-  header .avatar{width:140px;height:140px;flex:0 0 140px;order:0 !important;margin-left:20px !important;}
-  header,.contact-box{break-inside:avoid;page-break-inside:avoid;}
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+footer {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
 
-  /* Colonne expériences plus large à l’impression */
-  .twocol{grid-template-columns:.85fr 1.15fr !important;gap:12px !important;}
-  .job ul{margin:6px 0 0 14px !important;}
-  .job li{line-height:1.35 !important;}
+/* ===========================
+   RESPONSIVE - TABLETTE
+   =========================== */
+@media screen and (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .twocol {
+    grid-template-columns: 1fr;
+  }
+  
+  header {
+    grid-template-columns: 1fr;
+  }
+  
+  .avatar {
+    order: -1;
+    justify-self: start;
+  }
+}
 
-  /* Tuiles & chips un peu plus compactes pour tenir en 1 page */
-  .tile{padding:6px 8px !important;}
-  .grid{gap:8px !important;}
-  .chips{gap:4px !important;}
-  .chip{font-size:9pt !important;padding:1px 5px !important;line-height:1.2 !important;border-color:#cdd6e0 !important;}
+/* ===========================
+   RESPONSIVE - MOBILE
+   =========================== */
+@media screen and (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================
+   IMPRESSION (A4)
+   =========================== */
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+  
+  /* Layout général */
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+  
+  /* Header */
+  header {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+  }
+  
+  header .title {
+    flex: 1 1 auto;
+    order: 0 !important;
+  }
+  
+  header .avatar {
+    width: 140px;
+    height: 140px;
+    flex: 0 0 140px;
+    order: 0 !important;
+    margin-left: 20px !important;
+  }
+  
+  header, .contact-box {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  
+  /* Couleurs précises à l'impression */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* Layout deux colonnes */
+  .twocol {
+    grid-template-columns: 0.85fr 1.15fr !important;
+    gap: 12px !important;
+  }
+  
+  /* Expériences */
+  .job ul {
+    margin: 6px 0 0 14px !important;
+  }
+  
+  .job li {
+    line-height: 1.35 !important;
+  }
+  
+  /* Compactage des tuiles */
+  .tile {
+    padding: 6px 8px !important;
+  }
+  
+  .grid {
+    gap: 8px !important;
+  }
+  
+  /* Compactage des chips */
+  .chips {
+    gap: 4px !important;
+  }
+  
+  .chip {
+    font-size: 9pt !important;
+    padding: 1px 5px !important;
+    line-height: 1.2 !important;
+    border-color: #cdd6e0 !important;
+  }
+  
+  /* Masquer le sélecteur de langue */
+  .lang-top {
+    display: none;
+  }
 }

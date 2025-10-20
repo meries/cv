@@ -1,0 +1,273 @@
+# Langue par défaut du CV
+lang: fr
+
+# Configuration des langues disponibles
+languages:
+  - code: fr
+    label: FR
+    flag: "🇫🇷"
+  - code: en
+    label: EN
+    flag: "🇬🇧"
+
+theme:
+  mode: light
+  palette:
+    so-orange: "#f48024"
+    so-green: "#4b8352"
+    so-blue: "#0077cc"
+    so-blue-light: "#e1ecf4"
+    so-blue-border: "#7aa7c7"
+    ink: "#232629"
+    muted: "#525960"
+    line: "#d6d9dc"
+    bg: "#ffffff"
+    tag-bg: "#e1ecf4"
+    tag-border: "#7aa7c7"
+
+i18n:
+  fr:
+    presentation: "PRÉSENTATION"
+    about:
+      html: >
+        Ingénieur DevOps passionné par <strong>Linux</strong> et l'industrialisation des systèmes, j'aide les
+        entreprises à concevoir et déployer des plateformes <strong>fiables</strong> et <strong>performantes</strong>.
+        Depuis quinze ans, j'ai travaillé sur des environnements hébergés localement (on-premise) puis sur la
+        modernisation et la migration vers le <strong>cloud AWS</strong>. Calme, méthodique et patient, j'accorde une
+        attention particulière à la stabilité, à la qualité du code et à la résilience des infrastructures.
+        Aujourd'hui, je travaille au sein du groupe <strong>AVIV</strong>, où je contribue à la conception et à l'évolution
+        des architectures cloud multi-marques.
+
+    skills: "COMPÉTENCES"
+    skills_note: "Les barres indiquent le niveau de maîtrise global par catégorie."
+    skills_items:
+      - title: "DevOps & Infrastructure as Code"
+        level: 90
+        chips:
+          - AWS
+          - Azure
+          - Terraform
+          - CloudFormation
+          - Docker
+          - EKS
+          - Rancher
+          - Ansible
+          - Puppet
+          - Foreman
+          - Git
+          - CircleCI
+      - title: "Systèmes d'Exploitation"
+        level: 90
+        chips:
+          - RedHat/CentOS
+          - Debian/Ubuntu
+          - Windows
+      - title: "Développement"
+        level: 90
+        chips:
+          - HCL
+          - Python
+          - Ruby
+          - Shell/Bash
+          - PowerShell
+      - title: "Web & CDN"
+        level: 80
+        chips:
+          - CloudFront
+          - WAF
+          - S3 Static
+          - Apache
+          - Nginx
+          - JBoss
+      - title: "Réseau & Sécurité"
+        level: 70
+        chips:
+          - Juniper / Checkpoint
+          - Meinberg Lantime
+          - DataDome
+          - OpenTrust PKI
+          - Nessus/OpenScap
+      - title: "Supervision & Observabilité"
+        level: 75
+        chips:
+          - Datadog
+          - Zabbix
+          - IBM Tivoli
+
+    experience: "EXPÉRIENCES"
+    experience_items:
+      - title: "Ingénieur DevOps Senior"
+        company: "AVIV Group"
+        link: "https://www.aviv-group.com"
+        years: "2022 — Aujourd'hui"
+        details:
+          - "Gestion de l'infrastructure AWS / Orange Cloud"
+          - "Conception de modules Terraform et de stacks CloudFormation"
+          - "Mise en place de chaînes CI/CD avec CircleCI"
+          - "Supervision Datadog, gestion d'incidents N3."
+          - "Suivi automatisé des performances et du SEO via Lighthouse intégré aux pipelines CI/CD."
+          - "Rédaction de documentation technique"
+      - title: "Ingénieur SRE"
+        company: "Yousign"
+        link: "https://www.yousign.com"
+        years: "2022"
+        details:
+          - "Gestion d'infrastructure VMWare NSX / AWS / Azure."
+          - "Conception de rôles Ansible et de modules Terraform (IaC)"
+          - "Supervision Datadog, gestion d'incidents N3"
+          - "Rédaction de documentation technique"
+      - title: "Ingénieur Systèmes"
+        company: "Groupe ADSN"
+        link: "https://www.groupeadsn.fr"
+        years: "2015 — 2022"
+        details:
+          - "Gestion d'infrastructure VMWare / AWS"
+          - "Conception de modules IaC (Terraform, Puppet, Ansible)"
+          - "Mise en place de chaînes CI/CD avec Gitlab"
+          - "Administration réseau (switchs, routeurs, pare-feux, Lantime)"
+          - "Gestion du stockage (HP 3PAR, HP IBRIX X9000)"
+          - "Développement de scripts (Shell/Python/Ruby/PowerShell)"
+          - "Gestion des correctifs et des CVE"
+          - "Supervision avec Tivoli et Zabbix, gestion d'incidents N3"
+          - "Conception d'une infrastructure sécurisée dans le cadre d'un projet de conformité eIDAS"
+          - "Rédaction de documentation technique"
+    experience_footer: >
+      Les expériences antérieures sont disponibles sur mon profil
+      <a href="https://www.linkedin.com/in/remi-seidita-40b38915a">LinkedIn</a>.
+
+    projects: "PROJETS / RÉALISATIONS"
+    projects_items:
+      - title: "Routage web unifié (AVIV)"
+        description: "Conception d'un module Terraform et d'une application web interne pour le routage CloudFront + Lambda@Edge multi-marques, offrant visibilité, inventaire automatisé et optimisation SEO."
+      - title: "Migration AWS (AVIV)"
+        description: "Migration des environnements Orange Cloud vers AWS : CloudFront / Load Balancer + ECS ou Lambda, Jenkins, Solr, RDS Aurora et réseau (VPC, SG, routage)."
+      - title: "Migration AWS (ADNOV)"
+        description: "Conception et migration de l'infrastructure hébergée chez IBM vers AWS, incluant la construction de la Landing Zone et la standardisation des services."
+
+    education: "FORMATIONS & LANGUES"
+    education_items:
+      - "BTS Informatique de Gestion (ARLE) - <a href=\"https://ecolepratique.com/\">Groupe École Pratique</a>."
+      - "Baccalauréat STI Génie Électronique - <a href=\"https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/\">Lycée Pierre Mendès France</a>."
+    langline: "🇫🇷 Français (natif) — 🇬🇧 Anglais (professionnel)"
+
+  en:
+    presentation: "SUMMARY"
+    about:
+      html: >
+        DevOps engineer passionate about <strong>Linux</strong> and systems industrialization, helping companies design
+        and run <strong>reliable</strong>, <strong>high-performance</strong> platforms. For fifteen years I worked on
+        on-premise environments, then on modernization and migration to <strong>AWS</strong>. Calm, methodical and patient,
+        I care deeply about stability, code quality, and infrastructure resilience. Today I work at <strong>AVIV Group</strong>,
+        contributing to the design and evolution of multi-brand cloud architectures.
+
+    skills: "SKILLS"
+    skills_note: "Bars indicate the overall proficiency level by category."
+    skills_items:
+      - title: "DevOps & Infrastructure as Code"
+        level: 90
+        chips:
+          - AWS
+          - Azure
+          - Terraform
+          - CloudFormation
+          - Docker
+          - EKS
+          - Rancher
+          - Ansible
+          - Puppet
+          - Foreman
+          - Git
+          - CircleCI
+      - title: "Operating Systems"
+        level: 90
+        chips:
+          - RedHat/CentOS
+          - Debian/Ubuntu
+          - Windows
+      - title: "Development"
+        level: 90
+        chips:
+          - HCL
+          - Python
+          - Ruby
+          - Shell/Bash
+          - PowerShell
+      - title: "Web & Content Delivery"
+        level: 80
+        chips:
+          - CloudFront
+          - WAF
+          - S3 Static
+          - Apache
+          - Nginx
+          - JBoss
+      - title: "Network & Security"
+        level: 70
+        chips:
+          - Juniper / Checkpoint
+          - Meinberg Lantime
+          - DataDome
+          - OpenTrust PKI
+          - Nessus/OpenScap
+      - title: "Monitoring & Observability"
+        level: 75
+        chips:
+          - Datadog
+          - Zabbix
+          - IBM Tivoli
+
+    experience: "EXPERIENCE"
+    experience_items:
+      - title: "Senior DevOps Engineer"
+        company: "AVIV Group"
+        link: "https://www.aviv-group.com"
+        years: "2022 — Present"
+        details:
+          - "AWS / Orange Cloud infrastructure management"
+          - "Design of Terraform modules and CloudFormation stacks"
+          - "Implementation of CI/CD pipelines with CircleCI"
+          - "Datadog monitoring, L3 incident management"
+          - "Automated performance & SEO tracking via Lighthouse integrated into CI/CD pipelines"
+          - "Technical documentation writing"
+      - title: "Site Reliability Engineer"
+        company: "Yousign"
+        link: "https://www.yousign.com"
+        years: "2022"
+        details:
+          - "VMWare NSX / AWS / Azure infrastructure management"
+          - "Design of Ansible roles and Terraform modules (IaC)"
+          - "Datadog monitoring, L3 incident management"
+          - "Technical documentation writing"
+      - title: "Systems Engineer"
+        company: "ADSN Group"
+        link: "https://www.groupeadsn.fr"
+        years: "2015 — 2022"
+        details:
+          - "VMWare / AWS infrastructure management"
+          - "Design of IaC modules (Terraform, Puppet, Ansible)"
+          - "CI/CD setup with GitLab"
+          - "Network administration (switches, routers, firewalls, Lantime)"
+          - "Storage management (HP 3PAR, HP IBRIX X9000)"
+          - "Scripting (Shell / Python / Ruby / PowerShell)"
+          - "Patch and CVE management"
+          - "Monitoring with Tivoli and Zabbix, L3 incident management"
+          - "Design of a secured infrastructure as part of an eIDAS compliance project"
+          - "Technical documentation writing"
+    experience_footer: >
+      Earlier experience is available on my
+      <a href="https://www.linkedin.com/in/remi-seidita-40b38915a">LinkedIn</a> profile.
+
+    projects: "PROJECTS"
+    projects_items:
+      - title: "Unified web routing (AVIV)"
+        description: "Design of a Terraform module and internal web application for multi-brand CloudFront + Lambda@Edge routing, providing visibility, automated inventory and SEO optimization."
+      - title: "AWS Migration (AVIV)"
+        description: "Migration of Orange Cloud environments to AWS: CloudFront / Load Balancer + ECS or Lambda, Jenkins, Solr, RDS Aurora and network (VPC, SG, routing)."
+      - title: "AWS Migration (ADNOV)"
+        description: "Design and migration of IBM-hosted infrastructure to AWS, including Landing Zone construction and service standardization."
+
+    education: "EDUCATION & LANGUAGES"
+    education_items:
+      - "BTS Computer Science (ARLE) - <a href=\"https://ecolepratique.com/\">Groupe École Pratique</a>."
+      - "Baccalauréat STI Electronic Engineering - <a href=\"https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/\">Lycée Pierre Mendès France</a>."
+    langline: "🇫🇷 French (native) — 🇬🇧 English (professional)"
