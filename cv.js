@@ -42,24 +42,32 @@
 
   // 5) Optionnel : appliquer le thème/palette depuis la config
   try {
-    const p = cfg?.theme?.palette || {};
+    const isDarkMode = cfg?.theme?.mode === "dark";
+    const palette = isDarkMode ? (cfg?.theme?.palette_dark || {}) : (cfg?.theme?.palette || {});
+    
     const root = document.documentElement.style;
     const map = {
-      "--so-orange": p["so-orange"],
-      "--so-green": p["so-green"],
-      "--so-blue": p["so-blue"],
-      "--so-blue-light": p["so-blue-light"],
-      "--so-blue-border": p["so-blue-border"],
-      "--ink": p["ink"],
-      "--muted": p["muted"],
-      "--line": p["line"],
-      "--bg": p["bg"],
-      "--tag-bg": p["tag-bg"],
-      "--tag-border": p["tag-border"],
+      "--so-orange": palette["so-orange"],
+      "--so-green": palette["so-green"],
+      "--so-blue": palette["so-blue"],
+      "--so-blue-light": palette["so-blue-light"],
+      "--so-blue-border": palette["so-blue-border"],
+      "--ink": palette["ink"],
+      "--muted": palette["muted"],
+      "--line": palette["line"],
+      "--bg": palette["bg"],
+      "--tag-bg": palette["tag-bg"],
+      "--tag-border": palette["tag-border"],
     };
+    
     Object.entries(map).forEach(([k, v]) => v && root.setProperty(k, v));
-    if (cfg?.theme?.mode === "dark") {
+    
+    if (isDarkMode) {
       document.documentElement.classList.add("theme-dark");
+      console.log("[theme] Mode dark activé");
+    } else {
+      document.documentElement.classList.remove("theme-dark");
+      console.log("[theme] Mode light activé");
     }
   } catch (e) {
     console.warn("[theme]", e);
