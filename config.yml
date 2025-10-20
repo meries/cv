@@ -155,10 +155,10 @@ i18n:
     about:
       html: >
         DevOps engineer passionate about <strong>Linux</strong> and systems industrialization, helping companies design
-        and run <strong>reliable</strong>, <strong>high-performance</strong> platforms. For fifteen years I worked on
-        on-premise environments, then on modernization and migration to <strong>AWS</strong>. Calm, methodical and patient,
-        I care deeply about stability, code quality, and infrastructure resilience. Today I work at <strong>AVIV Group</strong>,
-        contributing to the design and evolution of multi-brand cloud architectures.
+        and run <strong>reliable</strong>, <strong>high-performance</strong> platforms.
+        With fifteen years of experience spanning on-premise environments and cloud migrations to <strong>AWS</strong>,
+        I bring a calm, methodical, and patient approach focused on stability, code quality, and infrastructure resilience.
+        Today, I work at <strong>AVIV Group</strong>, contributing to the design and evolution of multi-brand cloud architectures.
 
     skills: "SKILLS"
     skills_note: "Bars indicate the overall proficiency level by category."
