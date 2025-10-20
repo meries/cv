@@ -1,4 +1,4 @@
-// lang.js (avec génération dynamique complète : menu, skills, expériences, projets)
+// cv.js (avec génération dynamique complète : menu, skills, expériences, projets)
 (async () => {
   // 1) Promesse DOM prêt
   const domReady = new Promise((resolve) => {
