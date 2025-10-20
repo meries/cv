@@ -1,4 +1,4 @@
-// lang.js (avec génération dynamique complète : menu, skills, expériences, projets)
+// cv.js (avec génération dynamique complète : menu, skills, expériences, projets)
 (async () => {
   // 1) Promesse DOM prêt
   const domReady = new Promise((resolve) => {
@@ -155,6 +155,11 @@
 
       const sel = document.getElementById("lang-select");
       if (sel && sel.value !== lang) sel.value = lang;
+      
+      // Mettre à jour l'URL avec le paramètre lang (sans recharger la page)
+      const url = new URL(window.location);
+      url.searchParams.set('lang', lang);
+      window.history.replaceState({}, '', url);
 
       console.log(`[i18n] ✓ Langue appliquée : ${lang}`);
 
@@ -164,7 +169,19 @@
   }
 
   // 7) Initialisation + écouteur du sélecteur
-  const initial = localStorage.getItem("cv-lang") || cfg.lang || "fr";
+  
+  // Lire le paramètre de langue depuis l'URL (?lang=en ou ?lang=fr)
+  const urlParams = new URLSearchParams(window.location.search);
+  const langFromUrl = urlParams.get('lang');
+  
+  // Priorité : URL > localStorage > config.yml
+  const initial = langFromUrl || localStorage.getItem("cv-lang") || cfg.lang || "fr";
+  
+  // Si la langue vient de l'URL, la sauvegarder dans localStorage
+  if (langFromUrl) {
+    localStorage.setItem("cv-lang", langFromUrl);
+    console.log(`[i18n] Langue définie via URL : ${langFromUrl}`);
+  }
 
   if (sel) {
     sel.value = initial;
