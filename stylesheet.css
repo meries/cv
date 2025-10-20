@@ -123,32 +123,60 @@ header {
 }
 
 /* ===========================
-   SÉLECTEUR DE LANGUE
+   SÉLECTEUR DE LANGUE - Badge flottant
    =========================== */
-.lang-top {
-  position: absolute;
-  top: 16px;
+.lang-floating {
+  position: fixed;
+  bottom: 24px;
   right: 24px;
-  z-index: 10;
+  z-index: 1000;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.lang-top select {
+.lang-floating:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Classe utilitaire pour masquer à l'impression (utilisée par pdfcrowd et autres) */
+.no-print {
+  /* Cette classe sera ciblée par les outils de conversion PDF */
+}
+
+/* Masquage pour impression et conversion PDF */
+@media print {
+  .lang-floating,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+.lang-floating select {
   appearance: none;
   background: var(--tag-bg);
   border: 1px solid var(--tag-border);
   border-radius: 8px;
-  padding: 3px 8px 3px 6px;
-  font-size: 12.5px;
+  padding: 6px 26px 6px 10px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--ink);
   cursor: pointer;
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
-  padding-right: 20px;
 }
 
-.lang-top select:hover {
+.lang-floating select:hover {
   background: #f8f9fb;
   border-color: var(--so-blue-border);
 }
@@ -399,6 +427,11 @@ footer {
   .grid {
     grid-template-columns: 1fr;
   }
+  
+  .lang-floating {
+    bottom: 16px;
+    right: 16px;
+  }
 }
 
 /* ===========================
@@ -487,7 +520,11 @@ footer {
   }
   
   /* Masquer le sélecteur de langue */
-  .lang-top {
-    display: none;
+  .lang-floating {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
   }
 }
