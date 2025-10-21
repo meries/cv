@@ -40,37 +40,57 @@
     console.warn('[i18n] Aucune langue configurée dans config.yml ou format invalide.');
   }
 
-  // 5) Optionnel : appliquer le thème/palette depuis la config
-  try {
-    const isDarkMode = cfg?.theme?.mode === "dark";
-    const palette = isDarkMode ? (cfg?.theme?.palette_dark || {}) : (cfg?.theme?.palette || {});
-    
-    const root = document.documentElement.style;
-    const map = {
-      "--so-orange": palette["so-orange"],
-      "--so-green": palette["so-green"],
-      "--so-blue": palette["so-blue"],
-      "--so-blue-light": palette["so-blue-light"],
-      "--so-blue-border": palette["so-blue-border"],
-      "--ink": palette["ink"],
-      "--muted": palette["muted"],
-      "--line": palette["line"],
-      "--bg": palette["bg"],
-      "--tag-bg": palette["tag-bg"],
-      "--tag-border": palette["tag-border"],
-    };
-    
-    Object.entries(map).forEach(([k, v]) => v && root.setProperty(k, v));
-    
-    if (isDarkMode) {
-      document.documentElement.classList.add("theme-dark");
-      console.log("[theme] Mode dark activé");
-    } else {
-      document.documentElement.classList.remove("theme-dark");
-      console.log("[theme] Mode light activé");
+  // 5) Gestion du thème Dark/Light
+  function applyTheme(isDark) {
+    try {
+      const palette = isDark ? (cfg?.theme?.palette_dark || {}) : (cfg?.theme?.palette || {});
+      
+      const root = document.documentElement.style;
+      const map = {
+        "--so-orange": palette["so-orange"],
+        "--so-green": palette["so-green"],
+        "--so-blue": palette["so-blue"],
+        "--so-blue-light": palette["so-blue-light"],
+        "--so-blue-border": palette["so-blue-border"],
+        "--ink": palette["ink"],
+        "--muted": palette["muted"],
+        "--line": palette["line"],
+        "--bg": palette["bg"],
+        "--tag-bg": palette["tag-bg"],
+        "--tag-border": palette["tag-border"],
+      };
+      
+      Object.entries(map).forEach(([k, v]) => v && root.setProperty(k, v));
+      
+      if (isDark) {
+        document.documentElement.classList.add("theme-dark");
+        console.log("[theme] Mode dark activé");
+      } else {
+        document.documentElement.classList.remove("theme-dark");
+        console.log("[theme] Mode light activé");
+      }
+      
+      localStorage.setItem("cv-theme", isDark ? "dark" : "light");
+    } catch (e) {
+      console.warn("[theme]", e);
     }
-  } catch (e) {
-    console.warn("[theme]", e);
+  }
+
+  // Initialiser le thème
+  const savedTheme = localStorage.getItem("cv-theme");
+  const configTheme = cfg?.theme?.mode || "light";
+  const initialTheme = savedTheme || configTheme;
+  applyTheme(initialTheme === "dark");
+
+  // Écouteur du bouton toggle
+  const themeToggle = document.getElementById("theme-toggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const isDark = !document.documentElement.classList.contains("theme-dark");
+      themeToggle.classList.add("toggling");
+      setTimeout(() => themeToggle.classList.remove("toggling"), 400);
+      applyTheme(isDark);
+    });
   }
 
   // 6) Fonction d'application de la langue
@@ -185,7 +205,7 @@
   
   // Si mode impression, masquer le sélecteur de langue
   if (isPrintMode) {
-    const langSelector = document.querySelector('.lang-floating');
+    const langSelector = document.querySelector('.controls-floating');
     if (langSelector) {
       langSelector.style.display = 'none';
       langSelector.style.visibility = 'hidden';

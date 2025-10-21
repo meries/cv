@@ -1,18 +1,78 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rémi SEIDITA — CV</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- SEO amélioré -->
+  <title>Rémi SEIDITA — Ingénieur DevOps Senior | CV</title>
+  <meta name="description" content="CV de Rémi SEIDITA, Ingénieur DevOps Senior spécialisé en AWS, Terraform, CI/CD et Infrastructure as Code. 15 ans d'expérience en industrialisation et cloud.">
+  <meta name="keywords" content="DevOps, AWS, Terraform, CI/CD, Infrastructure as Code, Cloud">
+  <meta name="author" content="Rémi SEIDITA">
+  
+  <!-- Open Graph (réseaux sociaux) -->
+  <meta property="og:title" content="Rémi SEIDITA — Ingénieur DevOps Senior">
+  <meta property="og:description" content="Ingénieur DevOps passionné par Linux et l'industrialisation des systèmes. Spécialiste AWS et Terraform.">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://meries.github.io/cv/">
+  <meta property="og:image" content="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Rémi SEIDITA — CV DevOps">
+  <meta name="twitter:description" content="Ingénieur DevOps Senior | AWS, Terraform, CI/CD">
+  <meta name="twitter:image" content="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm">
+  
+  <!-- Favicon (améliore le score Best Practices) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E👨‍💻%3C/text%3E%3C/svg%3E">
+  
+  <!-- Preconnect pour optimiser les performances -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://1.gravatar.com" crossorigin>
+  
+  <!-- Theme color (apparence navigateur mobile) -->
+  <meta name="theme-color" content="#0077cc">
+  
   <link rel="stylesheet" href="stylesheet.css">
+  
+  <!-- Précharger le YAML pour améliorer les perfs -->
+  <link rel="preload" href="config.yml" as="fetch" crossorigin>
+  
   <script defer src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <script defer src="cv.js"></script>
 </head>
 <body>
-  <!-- Badge flottant pour la sélection de langue -->
-  <div class="lang-floating no-print" data-html2canvas-ignore="true" data-print="exclude">
-    <select id="lang-select" aria-label="Langue"></select>
+  <!-- Badge flottant pour langue + thème -->
+  <div class="controls-floating no-print" data-html2canvas-ignore="true" data-print="exclude">
+    <!-- Sélecteur de langue -->
+    <select id="lang-select" aria-label="Choisir la langue">
+      <!-- Options générées dynamiquement -->
+    </select>
+    
+    <!-- Séparateur -->
+    <div class="separator"></div>
+    
+    <!-- Toggle thème -->
+    <button id="theme-toggle" aria-label="Basculer le thème" title="Changer de thème">
+      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
   </div>
+
+  <!-- Badge flottant pour la sélection de langue -->
+  
   
   <div class="container">
     <header>
@@ -20,17 +80,27 @@
         <h1>Rémi SEIDITA</h1>
         <div class="contact-box">
           <div>📍 Mirabeau (84) — France</div>
-          <div><a href="mailto:seidita.remi.perso@gmail.com">✉️ seidita.remi.perso@gmail.com</a></div>
-          <div><a href="tel:+33609511179">📞 (+33) 6 09 51 11 79</a></div>
-          <div><a href="https://www.linkedin.com/in/remi-seidita-40b38915a" target="_blank">🔗 linkedin.com/in/remi-seidita-40b38915a</a></div>
-          <div><a href="https://meries.github.io/cv/" target="_blank">📄 https://meries.github.io/cv/</a></div>
+          <div><a href="mailto:seidita.remi.perso@gmail.com" aria-label="Email">✉️ seidita.remi.perso@gmail.com</a></div>
+          <div><a href="tel:+33609511179" aria-label="Téléphone">📞 (+33) 6 09 51 11 79</a></div>
+          <div><a href="https://www.linkedin.com/in/remi-seidita-40b38915a" target="_blank" rel="noopener noreferrer" aria-label="Profil LinkedIn">🔗 linkedin.com/in/remi-seidita-40b38915a</a></div>
+          <div><a href="https://meries.github.io/cv/" target="_blank" rel="noopener noreferrer" aria-label="CV en ligne">📄 meries.github.io/cv</a></div>
         </div>
       </div>
-      <div class="avatar"><img src="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=400&d=mm" alt="Rémi SEIDITA" /></div>
+      <!-- ✅ Image avec loading="lazy" et dimensions explicites -->
+      <div class="avatar">
+        <img src="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm" srcset="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm 1x, https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=320&d=mm 2x" 
+             alt="Photo de Rémi SEIDITA, Ingénieur DevOps Senior" 
+             width="160" 
+             height="160"
+             loading="lazy">
+      </div>
     </header>
 
     <section>
-      <div class="section-head"><h2 data-i18n="presentation">Présentation</h2><div class="bar"></div></div>
+      <div class="section-head">
+        <h2 data-i18n="presentation">Présentation</h2>
+        <div class="bar" role="presentation"></div>
+      </div>
       <div class="card" data-i18n="about">
         <p>Ingénieur DevOps passionné par <strong>Linux</strong> et l'industrialisation des systèmes, j'aide les entreprises à concevoir et déployer des plateformes <strong>fiables</strong> et <strong>performantes</strong>. Depuis quinze ans, j'ai travaillé sur des environnements hébergés localement (on-premise) puis sur la modernisation et la migration vers le <strong>cloud AWS</strong>. Calme, méthodique et patient, j'accorde une attention particulière à la stabilité, à la qualité du code et à la résilience des infrastructures. Aujourd'hui, je travaille au sein du groupe <strong>AVIV</strong>, où je contribue à la conception et à l'évolution des architectures cloud multi-marques.</p>
       </div>
@@ -38,7 +108,10 @@
 
     <section class="twocol">
       <div>
-        <div class="section-head"><h2 data-i18n="skills">Compétences</h2><div class="bar"></div></div>
+        <div class="section-head">
+          <h2 data-i18n="skills">Compétences</h2>
+          <div class="bar" role="presentation"></div>
+        </div>
         <p id="skills-note" style="color:var(--muted); font-size:12px; margin:4px 0 10px;">
           Les barres indiquent le niveau de maîtrise global par catégorie.
         </p>
@@ -47,7 +120,10 @@
       </div>
 
       <div>
-        <div class="section-head"><h2 data-i18n="experience">Expériences</h2><div class="bar"></div></div>
+        <div class="section-head">
+          <h2 data-i18n="experience">Expériences</h2>
+          <div class="bar" role="presentation"></div>
+        </div>
         <!-- Les expériences seront générées dynamiquement -->
         <div id="experience-list" class="exp"></div>
       </div>
@@ -55,26 +131,33 @@
 
     <section class="twocol">
       <div>
-        <div class="section-head"><h2 data-i18n="projects">Projets / Réalisations</h2><div class="bar"></div></div>
+        <div class="section-head">
+          <h2 data-i18n="projects">Projets / Réalisations</h2>
+          <div class="bar" role="presentation"></div>
+        </div>
         <!-- Les projets seront générés dynamiquement -->
         <div id="projects-list" class="grid"></div>
       </div>
       <div>
-        <div class="section-head"><h2 data-i18n="education">Formations & Langues</h2><div class="bar"></div></div>
+        <div class="section-head">
+          <h2 data-i18n="education">Formations & Langues</h2>
+          <div class="bar" role="presentation"></div>
+        </div>
         <!-- L'éducation sera générée dynamiquement -->
         <div class="tile" id="education-list" style="margin-bottom:12px;"></div>
         <div class="tile education">
           <div class="chips">
             <span id="lang-line">
-              <img class="flag" src="assets/flags/fr.svg" alt="FR">Français (natif) — 
-              <img class="flag" src="assets/flags/gb.svg" alt="GB">Anglais (professionnel)
+              <img class="flag" src="assets/flags/fr.svg" alt="Drapeau français">Français (natif) — 
+              <img class="flag" src="assets/flags/gb.svg" alt="Drapeau britannique">Anglais (professionnel)
             </span>
           </div>
         </div>
       </div>
     </section>
 
-    <footer>
+    <footer role="contentinfo">
+      <!-- Footer vide pour l'instant -->
     </footer>
   </div>
 </body>
