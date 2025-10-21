@@ -353,6 +353,11 @@ section + section {
   font-weight: 600;
 }
 
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ===========================
    CHIPS / TAGS
    =========================== */
@@ -585,5 +590,252 @@ footer {
     opacity: 0 !important;
     position: absolute !important;
     left: -9999px !important;
+  }
+}
+
+/* Hauteurs minimales pour éviter les layout shifts */
+#skills-list { min-height: 380px; }
+#experience-list { min-height: 420px; }
+#projects-list { min-height: 180px; }
+#education-list { min-height: 80px; }
+.container { min-height: 100vh; }
+
+@media (max-width: 900px) {
+  #skills-list { min-height: 580px; }
+  #projects-list { min-height: 360px; }
+}
+
+@media (max-width: 600px) {
+  #skills-list { min-height: 1100px; }
+  #projects-list { min-height: 540px; }
+  #experience-list { min-height: 500px; }
+}
+/* ===========================
+   FIX LIGHTHOUSE - CLS & Animations
+   Ajouté automatiquement par optimize.sh
+   =========================== */
+
+/* Hauteurs minimales pour éviter layout shifts */
+#skills-list { min-height: 380px; }
+#experience-list { min-height: 420px; }
+#projects-list { min-height: 180px; }
+#education-list { min-height: 80px; }
+.container { min-height: 100vh; }
+
+/* Optimisation GPU pour animations */
+.lang-floating {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.lang-floating:hover {
+  transform: translateY(-2px) translateZ(0);
+}
+
+/* Skeleton loader */
+#skills-list:empty::after,
+#experience-list:empty::after,
+#projects-list:empty::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--line) 25%, #e8ebee 50%, var(--line) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 12px;
+  will-change: background-position;
+  transform: translateZ(0);
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  #skills-list { min-height: 580px; }
+  #projects-list { min-height: 360px; }
+}
+
+@media (max-width: 600px) {
+  #skills-list { min-height: 1100px; }
+  #projects-list { min-height: 540px; }
+  #experience-list { min-height: 500px; }
+}
+
+/* Préférence de mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===========================
+   BADGE FLOTTANT - Langue + Thème
+   Ajouté par install-theme-toggle.sh
+   =========================== */
+
+.controls-floating {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-dark .controls-floating {
+  background: #2a2d31;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.controls-floating:hover {
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .controls-floating:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.separator {
+  width: 1px;
+  height: 24px;
+  background: var(--line);
+  margin: 0 4px;
+}
+
+.controls-floating select {
+  appearance: none;
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  border-radius: 8px;
+  padding: 6px 26px 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  transition: all 0.2s ease;
+}
+
+.theme-dark .controls-floating select {
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ccc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.controls-floating select:hover {
+  background: #f8f9fb;
+  border-color: var(--so-blue-border);
+}
+
+.theme-dark .controls-floating select:hover {
+  background: #3a3d41;
+}
+
+.controls-floating select:focus {
+  outline: 2px solid var(--so-blue);
+  outline-offset: 2px;
+}
+
+#theme-toggle {
+  appearance: none;
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+}
+
+#theme-toggle:hover {
+  background: #f8f9fb;
+  border-color: var(--so-blue-border);
+  transform: scale(1.05);
+}
+
+.theme-dark #theme-toggle:hover {
+  background: #3a3d41;
+}
+
+#theme-toggle:focus {
+  outline: 2px solid var(--so-blue);
+  outline-offset: 2px;
+}
+
+#theme-toggle:active {
+  transform: scale(0.95);
+}
+
+#theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  transition: all 0.3s ease;
+}
+
+.sun-icon { display: block; }
+.moon-icon { display: none; }
+.theme-dark .sun-icon { display: none; }
+.theme-dark .moon-icon { display: block; }
+
+#theme-toggle.toggling {
+  animation: rotate-icon 0.4s ease;
+}
+
+@keyframes rotate-icon {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg) scale(0.9); }
+  100% { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 600px) {
+  .controls-floating {
+    bottom: 16px;
+    right: 16px;
+    padding: 6px;
+    gap: 6px;
+  }
+  
+  .controls-floating select {
+    padding: 5px 24px 5px 8px;
+    font-size: 12px;
+  }
+  
+  #theme-toggle {
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+  }
+  
+  #theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .separator {
+    height: 20px;
   }
 }
