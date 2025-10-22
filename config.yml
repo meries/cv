@@ -11,7 +11,7 @@ languages:
     flag: "🇬🇧"
 
 theme:
-  mode: light  # Options: light ou dark
+  mode: dark  # Options: light ou dark
   palette:
     # Thème Light
     so-orange: "#f48024"

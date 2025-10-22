@@ -10,7 +10,7 @@
   <meta name="keywords" content="DevOps, AWS, Terraform, CI/CD, Infrastructure as Code, Cloud">
   <meta name="author" content="Rémi SEIDITA">
   
-  <!-- Open Graph (réseaux sociaux) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Rémi SEIDITA — Ingénieur DevOps Senior">
   <meta property="og:description" content="Ingénieur DevOps passionné par Linux et l'industrialisation des systèmes. Spécialiste AWS et Terraform.">
   <meta property="og:type" content="profile">
@@ -23,56 +23,71 @@
   <meta name="twitter:description" content="Ingénieur DevOps Senior | AWS, Terraform, CI/CD">
   <meta name="twitter:image" content="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm">
   
-  <!-- Favicon (améliore le score Best Practices) -->
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   
-  <!-- Preconnect pour optimiser les performances -->
+  <!-- Preconnect -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://1.gravatar.com" crossorigin>
   
-  <!-- Theme color (apparence navigateur mobile) -->
+  <!-- Theme color -->
   <meta name="theme-color" content="#0077cc">
   
   <link rel="stylesheet" href="stylesheet.css">
   
-  <!-- Précharger le YAML pour améliorer les perfs -->
+  <!-- Précharger le YAML -->
   <link rel="preload" href="config.yml" as="fetch" crossorigin>
   
   <script defer src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script defer src="cv.js"></script>
 </head>
 <body>
-  <!-- Badge flottant pour langue + thème -->
+  <!-- Badge flottant vertical : Langue + Thème (en haut) puis PDF (en dessous) -->
   <div class="controls-floating no-print" data-html2canvas-ignore="true" data-print="exclude">
-    <!-- Sélecteur de langue -->
-    <select id="lang-select" aria-label="Choisir la langue">
-      <!-- Options générées dynamiquement -->
-    </select>
+    <!-- Ligne 1 : Langue + Thème -->
+    <div class="controls-row">
+      <!-- Sélecteur de langue -->
+      <select id="lang-select" aria-label="Choisir la langue">
+        <!-- Options générées dynamiquement -->
+      </select>
+      
+      <!-- Séparateur -->
+      <div class="separator"></div>
+      
+      <!-- Toggle thème -->
+      <button id="theme-toggle" aria-label="Basculer le thème" title="Changer de thème">
+        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
     
-    <!-- Séparateur -->
-    <div class="separator"></div>
+    <!-- Séparateur horizontal -->
+    <div class="separator-horizontal"></div>
     
-    <!-- Toggle thème -->
-    <button id="theme-toggle" aria-label="Basculer le thème" title="Changer de thème">
-      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    <!-- Ligne 2 : Bouton PDF pleine largeur -->
+    <button id="pdf-download" class="pdf-button-full" aria-label="Télécharger en PDF" title="Télécharger en PDF">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
       </svg>
-      <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      </svg>
+      <span id="pdf-button-text">Télécharger en PDF</span>
     </button>
   </div>
-
-  <!-- Badge flottant pour la sélection de langue -->
-  
   
   <div class="container">
     <header>
@@ -86,9 +101,9 @@
           <div><a href="https://meries.github.io/cv/" target="_blank" rel="noopener noreferrer" aria-label="CV en ligne">📄 meries.github.io/cv</a></div>
         </div>
       </div>
-      <!-- Image avec loading="lazy" et dimensions explicites -->
       <div class="avatar">
-        <img src="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm" srcset="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm 1x, https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=320&d=mm 2x" 
+        <img src="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm" 
+             srcset="https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=160&d=mm 1x, https://1.gravatar.com/avatar/47a64344adfa641a3d842eece6221216?s=320&d=mm 2x" 
              alt="Photo de Rémi SEIDITA, Ingénieur DevOps Senior" 
              width="160" 
              height="160"
@@ -115,7 +130,6 @@
         <p id="skills-note" style="color:var(--muted); font-size:12px; margin:4px 0 10px;">
           Les barres indiquent le niveau de maîtrise global par catégorie.
         </p>
-        <!-- Les compétences seront générées dynamiquement -->
         <div id="skills-list" class="grid"></div>
       </div>
 
@@ -124,7 +138,6 @@
           <h2 data-i18n="experience">Expériences</h2>
           <div class="bar" role="presentation"></div>
         </div>
-        <!-- Les expériences seront générées dynamiquement -->
         <div id="experience-list" class="exp"></div>
       </div>
     </section>
@@ -135,7 +148,6 @@
           <h2 data-i18n="projects">Projets / Réalisations</h2>
           <div class="bar" role="presentation"></div>
         </div>
-        <!-- Les projets seront générés dynamiquement -->
         <div id="projects-list" class="grid"></div>
       </div>
       <div>
@@ -143,7 +155,6 @@
           <h2 data-i18n="education">Formations & Langues</h2>
           <div class="bar" role="presentation"></div>
         </div>
-        <!-- L'éducation sera générée dynamiquement -->
         <div class="tile" id="education-list" style="margin-bottom:12px;"></div>
         <div class="tile education">
           <div class="chips">
@@ -157,7 +168,6 @@
     </section>
 
     <footer role="contentinfo">
-      <!-- Footer vide pour l'instant -->
     </footer>
   </div>
 </body>
