@@ -5,10 +5,10 @@ lang: fr
 languages:
   - code: fr
     label: FR
-    flag: "🇫🇷"
+    flag: "assets/flags/fr.svg"
   - code: en
     label: EN
-    flag: "🇬🇧"
+    flag: "assets/flags/gb.svg"
 
 theme:
   mode: light  # Options: light ou dark
@@ -163,7 +163,7 @@ i18n:
     education_items:
       - "BTS Informatique de Gestion (ARLE) - <a href=\"https://ecolepratique.com/\">Groupe École Pratique</a>."
       - "Baccalauréat STI Génie Électronique - <a href=\"https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/\">Lycée Pierre Mendès France</a>."
-    langline: "🇫🇷 Français (natif) — 🇬🇧 Anglais (professionnel)"
+    langline: "Français (natif) — Anglais (professionnel)"
 
   en:
     presentation: "SUMMARY"
@@ -285,4 +285,4 @@ i18n:
     education_items:
       - "BTS Computer Science (ARLE) - <a href=\"https://ecolepratique.com/\">Groupe École Pratique</a>."
       - "Baccalauréat STI Electronic Engineering - <a href=\"https://www.site.ac-aix-marseille.fr/lyc-mendesfrance-vitrolles/spip/\">Lycée Pierre Mendès France</a>."
-    langline: "🇫🇷 French (native) — 🇬🇧 English (professional)"
+    langline: "French (native) — English (professional)"

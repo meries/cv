@@ -1,4 +1,4 @@
-// cv.js - Avec gestion de la langue, du thème ET du PDF (VERSION LIGHT FORCÉ)
+// cv.js - Avec custom select pour drapeaux SVG (version robuste avec fallback)
 (async () => {
   // 1) Promesse DOM prêt
   const domReady = new Promise((resolve) => {
@@ -26,20 +26,120 @@
   // 3) Attendre que le DOM soit prêt
   await domReady;
 
-  // 4) Génération dynamique du menu de langues avec drapeaux
-  const sel = document.getElementById("lang-select");
+  // Fonction helper pour obtenir le chemin du drapeau SVG
+  function getFlagPath(lang) {
+    const flagMap = {
+      'fr': 'assets/flags/fr.svg',
+      'en': 'assets/flags/gb.svg'
+    };
+    
+    // Si c'est déjà un chemin de fichier valide, le retourner
+    if (lang.flag && (lang.flag.endsWith('.svg') || lang.flag.startsWith('assets/'))) {
+      return lang.flag;
+    }
+    
+    // Sinon utiliser le mapping basé sur le code de langue
+    return flagMap[lang.code] || 'assets/flags/fr.svg';
+  }
+
+  // 4) Génération dynamique du custom select de langues avec drapeaux SVG
+  const langContainer = document.getElementById("lang-select-container");
   
-  if (sel && Array.isArray(cfg.languages) && cfg.languages.length > 0) {
-    sel.innerHTML = "";
-    cfg.languages.forEach(lang => {
-      const option = document.createElement("option");
-      option.value = lang.code;
-      // Utiliser le drapeau défini dans config.yml ou un drapeau par défaut
-      const flag = lang.flag || '🌐';
-      option.textContent = `${flag} ${lang.label}`;
-      sel.appendChild(option);
+  if (langContainer && Array.isArray(cfg.languages) && cfg.languages.length > 0) {
+    // Créer le custom select
+    const customSelect = document.createElement("div");
+    customSelect.className = "custom-select";
+    customSelect.id = "lang-select";
+    
+    // Bouton principal
+    const selectBtn = document.createElement("button");
+    selectBtn.className = "select-button";
+    selectBtn.setAttribute("aria-label", "Choisir la langue");
+    selectBtn.setAttribute("aria-haspopup", "listbox");
+    selectBtn.setAttribute("aria-expanded", "false");
+    
+    // Contenu du bouton (sera mis à jour)
+    selectBtn.innerHTML = '<span class="select-content"></span><span class="select-arrow">▼</span>';
+    
+    // Liste des options
+    const optionsList = document.createElement("div");
+    optionsList.className = "select-options";
+    optionsList.setAttribute("role", "listbox");
+    
+    cfg.languages.forEach((lang, index) => {
+      const flagPath = getFlagPath(lang);
+      console.log(`[i18n] Langue ${lang.code}: flag path = ${flagPath}`);
+      
+      const option = document.createElement("button");
+      option.className = "select-option";
+      option.setAttribute("role", "option");
+      option.setAttribute("data-value", lang.code);
+      option.innerHTML = `
+        <img src="${flagPath}" alt="${lang.label}" class="flag-icon" onerror="console.error('Flag not found:', this.src)">
+        <span>${lang.label}</span>
+      `;
+      
+      option.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        applyLang(lang.code);
+        updateSelectButton(lang);
+        closeSelect();
+      });
+      
+      optionsList.appendChild(option);
     });
-  } else if (sel) {
+    
+    customSelect.appendChild(selectBtn);
+    customSelect.appendChild(optionsList);
+    langContainer.appendChild(customSelect);
+    
+    // Fonction pour mettre à jour le bouton
+    function updateSelectButton(lang) {
+      const content = selectBtn.querySelector('.select-content');
+      const flagPath = getFlagPath(lang);
+      content.innerHTML = `
+        <img src="${flagPath}" alt="${lang.label}" class="flag-icon" onerror="console.error('Flag not found:', this.src)">
+        <span>${lang.label}</span>
+      `;
+      
+      // Mettre à jour l'état sélectionné
+      optionsList.querySelectorAll('.select-option').forEach(opt => {
+        opt.classList.toggle('selected', opt.dataset.value === lang.code);
+      });
+    }
+    
+    // Fonction pour ouvrir/fermer le select
+    function toggleSelect() {
+      const isOpen = customSelect.classList.toggle('open');
+      selectBtn.setAttribute('aria-expanded', isOpen);
+    }
+    
+    function closeSelect() {
+      customSelect.classList.remove('open');
+      selectBtn.setAttribute('aria-expanded', 'false');
+    }
+    
+    // Events
+    selectBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleSelect();
+    });
+    
+    // Fermer si on clique ailleurs
+    document.addEventListener("click", (e) => {
+      if (!customSelect.contains(e.target)) {
+        closeSelect();
+      }
+    });
+    
+    // Initialiser avec la langue par défaut
+    const initialLang = cfg.languages.find(l => l.code === (localStorage.getItem("cv-lang") || cfg.lang || "fr")) || cfg.languages[0];
+    updateSelectButton(initialLang);
+    
+    console.log('[i18n] Custom select créé avec drapeaux SVG');
+  } else if (langContainer) {
     console.warn('[i18n] Aucune langue configurée dans config.yml ou format invalide.');
   }
 
@@ -358,8 +458,26 @@
       localStorage.setItem("cv-lang", lang);
       document.documentElement.setAttribute("lang", lang);
 
-      const sel = document.getElementById("lang-select");
-      if (sel && sel.value !== lang) sel.value = lang;
+      // Mettre à jour le custom select
+      const currentLang = cfg.languages.find(l => l.code === lang);
+      if (currentLang) {
+        const selectBtn = document.querySelector('.select-button');
+        if (selectBtn) {
+          const content = selectBtn.querySelector('.select-content');
+          if (content) {
+            const flagPath = getFlagPath(currentLang);
+            content.innerHTML = `
+              <img src="${flagPath}" alt="${currentLang.label}" class="flag-icon" onerror="console.error('Flag not found:', this.src)">
+              <span>${currentLang.label}</span>
+            `;
+          }
+        }
+        
+        // Mettre à jour l'état sélectionné dans la liste
+        document.querySelectorAll('.select-option').forEach(opt => {
+          opt.classList.toggle('selected', opt.dataset.value === lang);
+        });
+      }
       
       // Mettre à jour l'URL avec le paramètre lang
       const url = new URL(window.location);
@@ -395,11 +513,6 @@
   if (langFromUrl) {
     localStorage.setItem("cv-lang", langFromUrl);
     console.log(`[i18n] Langue définie via URL : ${langFromUrl}`);
-  }
-
-  if (sel) {
-    sel.value = initial;
-    sel.addEventListener("change", (e) => applyLang(e.target.value));
   }
 
   // Applique la langue initiale

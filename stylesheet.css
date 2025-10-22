@@ -179,16 +179,19 @@ header {
 
 /* Première ligne : Langue + Thème */
 .controls-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 10px 1fr;
   align-items: center;
-  gap: 8px;
+  gap: 0;
 }
 
 /* Séparateur vertical (entre langue et thème) */
 .separator {
   width: 1px;
-  height: 24px;
+  height: calc(var(--ctrl-h) * 0.72);
   background: var(--line);
+  justify-self: center;
+  border-radius: 1px;
   margin: 0 4px;
 }
 
@@ -201,42 +204,132 @@ header {
 }
 
 /* ===========================
-   SÉLECTEUR DE LANGUE
+   CUSTOM SELECT POUR DRAPEAUX SVG
    =========================== */
-.controls-floating select {
+.custom-select {
+  position: relative;
+  width: 100%;
+  min-width: 80px;
+}
+
+.select-button {
   appearance: none;
   background: var(--tag-bg);
   border: 1px solid var(--tag-border);
-  border-radius: 8px;
-  padding: 6px 26px 6px 10px;
+  border-radius: var(--ctrl-r);
+  padding: 0 28px 0 10px;
+  height: var(--ctrl-h);
+  line-height: calc(var(--ctrl-h) - 2px);
   font-size: 13px;
   font-weight: 600;
   color: var(--ink);
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
   transition: all 0.2s ease;
-  text-align: center;
-  text-align-last: center;
+  position: relative;
 }
 
-.theme-dark .controls-floating select {
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ccc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+.select-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.controls-floating select:hover {
+.select-arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  transition: transform 0.2s ease;
+  pointer-events: none;
+}
+
+.custom-select.open .select-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.select-button:hover {
   background: #f8f9fb;
   border-color: var(--so-blue-border);
 }
 
-.theme-dark .controls-floating select:hover {
+.theme-dark .select-button:hover {
   background: #3a3d41;
 }
 
-.controls-floating select:focus {
+.select-button:focus {
   outline: 2px solid var(--so-blue);
   outline-offset: 2px;
+}
+
+.select-options {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--tag-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1001;
+  min-width: 100%;
+}
+
+.theme-dark .select-options {
+  background: #2a2d31;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.custom-select.open .select-options {
+  display: flex;
+}
+
+.select-option {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.select-option:hover {
+  background: var(--so-blue-light);
+}
+
+.theme-dark .select-option:hover {
+  background: #3a3d41;
+}
+
+.select-option.selected {
+  background: var(--so-blue-light);
+  color: var(--so-blue);
+}
+
+.theme-dark .select-option.selected {
+  background: #1e3a52;
+}
+
+.flag-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 2px;
 }
 
 /* ===========================
@@ -246,16 +339,16 @@ header {
   appearance: none;
   background: var(--tag-bg);
   border: 1px solid var(--tag-border);
-  border-radius: 8px;
-  padding: 6px 8px;
+  border-radius: var(--ctrl-r);
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--ink);
   transition: all 0.2s ease;
-  width: 36px;
-  height: 36px;
+  width: 100%;
+  height: var(--ctrl-h);
 }
 
 #theme-toggle:hover {
@@ -292,12 +385,6 @@ header {
 #theme-toggle.toggling {
   animation: rotate-icon 0.4s ease;
 }
-
-/* @keyframes rotate-icon {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg) scale(0.9); }
-  100% { transform: rotate(360deg); }
-} */
 
 /* Animation keyframes */
 @keyframes blink-theme {
@@ -733,14 +820,21 @@ footer {
     gap: 6px;
   }
   
-  .controls-floating select {
-    padding: 5px 24px 5px 8px;
+  :root { 
+    --ctrl-h: 32px; 
+  }
+  
+  .select-button {
+    padding: 0 24px 0 8px;
     font-size: 12px;
   }
   
+  .flag-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
   #theme-toggle {
-    width: 32px;
-    height: 32px;
     padding: 5px;
   }
   
@@ -870,64 +964,4 @@ footer {
     width: 0 !important;
     height: 0 !important;
   }
-}
-
-/* === Rangée contrôle Langue ↔ Thème : même largeur pour chacun = pas de "trou" === */
-:root{
-  --ctrl-h: 34px;   /* hauteur des contrôles (tu peux ajuster) */
-  --ctrl-r: 8px;    /* arrondi commun */
-}
-
-/* La rangée a 3 colonnes : [ langue | séparateur | thème ] avec 1fr de part et d’autre */
-.controls-row{
-  display: grid;
-  grid-template-columns: 1fr 10px 1fr;  /* 1fr pour la langue, 10px de séparateur, 1fr pour le thème */
-  align-items: center;
-  gap: 0; /* on gère l’espace avec le séparateur */
-}
-
-/* Le séparateur vertical */
-.controls-row .separator{
-  width: 1px;
-  height: calc(var(--ctrl-h) * 0.72);
-  background: var(--line);
-  justify-self: center;
-  border-radius: 1px;
-}
-
-/* Sélecteur de langue — prend 100% de sa colonne (1fr) */
-.controls-row select{
-  height: var(--ctrl-h);
-  border-radius: var(--ctrl-r);
-  width: 100%;
-  padding: 0 26px 0 10px;                 /* pas de padding vertical → parfait alignement */
-  line-height: calc(var(--ctrl-h) - 2px); /* vertical align */
-  text-align: center;                      /* texte centré */
-  text-align-last: center;                 /* option sélectionnée centrée */
-}
-
-/* Bouton thème — prend 100% de sa colonne (1fr) */
-#theme-toggle{
-  width: 100% !important;                 /* remplace l’ancienne largeur fixe */
-  height: var(--ctrl-h) !important;
-  border-radius: var(--ctrl-r) !important;
-  padding: 0 !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;                /* icône centrée */
-  background: var(--tag-bg);
-  border: 1px solid var(--tag-border);
-  transition: background .2s ease, border-color .2s ease;
-}
-#theme-toggle:hover{ background: var(--so-blue-light); }
-
-#theme-toggle svg{
-  width: 16px; height: 16px; fill: var(--ink);
-}
-
-/* Version mobile un poil plus compacte */
-@media (max-width: 600px){
-  :root{ --ctrl-h: 32px; }
-  #theme-toggle svg{ width: 15px; height: 15px; 
- }
 }
