@@ -1,4 +1,4 @@
-// cv.js (avec génération dynamique complète : menu, skills, expériences, projets)
+// cv.js - Avec gestion de la langue, du thème ET du PDF (VERSION LIGHT FORCÉ)
 (async () => {
   // 1) Promesse DOM prêt
   const domReady = new Promise((resolve) => {
@@ -10,7 +10,7 @@
   });
 
   // 2) Charger la config YAML
-  let cfg = { lang: "fr", languages: [], i18n: {} };
+  let cfg = { lang: "fr", languages: [], i18n: {}, theme: {} };
   try {
     const res = await fetch("config.yml", { cache: "no-store" });
     if (res.ok) {
@@ -26,14 +26,17 @@
   // 3) Attendre que le DOM soit prêt
   await domReady;
 
-  // 4) Génération dynamique du menu de langues
+  // 4) Génération dynamique du menu de langues avec drapeaux
   const sel = document.getElementById("lang-select");
+  
   if (sel && Array.isArray(cfg.languages) && cfg.languages.length > 0) {
     sel.innerHTML = "";
     cfg.languages.forEach(lang => {
       const option = document.createElement("option");
       option.value = lang.code;
-      option.textContent = `${lang.flag || ""} ${lang.label}`.trim();
+      // Utiliser le drapeau défini dans config.yml ou un drapeau par défaut
+      const flag = lang.flag || '🌐';
+      option.textContent = `${flag} ${lang.label}`;
       sel.appendChild(option);
     });
   } else if (sel) {
@@ -82,7 +85,7 @@
   const initialTheme = savedTheme || configTheme;
   applyTheme(initialTheme === "dark");
 
-  // Écouteur du bouton toggle
+  // Écouteur du bouton toggle thème
   const themeToggle = document.getElementById("theme-toggle");
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
@@ -93,7 +96,187 @@
     });
   }
 
-  // 6) Fonction d'application de la langue
+  // 6) Gestion du bouton PDF avec traduction et jsPDF + html2canvas (TOUJOURS EN MODE LIGHT)
+  const pdfButton = document.getElementById("pdf-download");
+  const pdfButtonText = document.getElementById("pdf-button-text");
+  
+  if (pdfButton) {
+    // Fonction pour mettre à jour le texte selon la langue
+    const updatePdfText = () => {
+      const lang = document.documentElement.getAttribute('lang') || 'fr';
+      const translations = {
+        fr: {
+          text: 'Télécharger en PDF',
+          title: 'Télécharger le CV en PDF',
+          generating: 'Génération...',
+          filename: 'CV_Remi_SEIDITA'
+        },
+        en: {
+          text: 'Download as PDF',
+          title: 'Download CV as PDF',
+          generating: 'Generating...',
+          filename: 'CV_Remi_SEIDITA'
+        }
+      };
+      
+      const t = translations[lang] || translations.fr;
+      
+      if (pdfButtonText) {
+        pdfButtonText.textContent = t.text;
+      }
+      pdfButton.setAttribute('title', t.title);
+      pdfButton.setAttribute('aria-label', t.title);
+      pdfButton.dataset.filename = t.filename;
+      pdfButton.dataset.generating = t.generating;
+    };
+    
+    // Mettre à jour au chargement
+    updatePdfText();
+    
+    // Observer les changements de langue
+    const observer = new MutationObserver(updatePdfText);
+    observer.observe(document.documentElement, { 
+      attributes: true, 
+      attributeFilter: ['lang'] 
+    });
+    
+    // Gestionnaire de clic avec jsPDF + html2canvas optimisé (FORCE MODE LIGHT)
+    pdfButton.addEventListener("click", async () => {
+      console.log("[pdf] Génération du PDF avec jsPDF + html2canvas...");
+      
+      // Animation du bouton et changement de texte
+      pdfButton.classList.add("downloading");
+      const originalText = pdfButtonText.textContent;
+      pdfButtonText.textContent = pdfButton.dataset.generating || 'Génération...';
+      pdfButton.disabled = true;
+      
+      // Variables pour la restauration
+      let wasDarkMode = false;
+      const controls = document.querySelector('.controls-floating');
+      
+      try {
+        // Sauvegarder le thème actuel
+        wasDarkMode = document.documentElement.classList.contains('theme-dark');
+        
+      // Forcer le mode light pour le PDF (plus professionnel)
+      if (wasDarkMode) {
+        document.documentElement.classList.remove('theme-dark');
+        console.log("[pdf] Passage temporaire en mode light pour un PDF professionnel");
+        
+        // Forcer l'application du thème light
+        applyTheme(false);
+      }
+        
+      // Masquer les contrôles avant la capture
+      if (controls) {
+        controls.style.display = 'none';
+      }
+
+      // Forcer un reflow pour que le navigateur applique tous les changements CSS
+      const element = document.querySelector('.container');
+      void element.offsetHeight; // Force reflow
+
+      // Délai plus long pour laisser le navigateur recalculer tous les styles
+      await new Promise(resolve => setTimeout(resolve, 500));
+        
+        console.log("[pdf] Génération du PDF en mode light");
+        
+        // Configuration optimale pour html2canvas
+        const canvas = await html2canvas(element, {
+          scale: 2, // Haute résolution
+          useCORS: true, // Pour charger les images externes (Gravatar)
+          logging: false,
+          backgroundColor: '#ffffff',
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight,
+          scrollY: -window.scrollY,
+          scrollX: -window.scrollX,
+          imageTimeout: 0,
+          allowTaint: true
+        });
+        
+        // Restaurer les contrôles
+        if (controls) {
+          controls.style.display = '';
+        }
+        
+      // Restaurer le thème dark si nécessaire
+      if (wasDarkMode) {
+        applyTheme(true); 
+        console.log("[pdf] ✓ Thème dark restauré");
+      }
+        
+        // Dimensions A4 en mm
+        const pdfWidth = 210;
+        const pdfHeight = 297;
+        
+        // Calculer les dimensions pour tenir sur une page
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        const ratio = canvasWidth / canvasHeight;
+        
+        // Marges en mm
+        const margin = 10;
+        const availableWidth = pdfWidth - (2 * margin);
+        const availableHeight = pdfHeight - (2 * margin);
+        
+        // Calculer les dimensions finales
+        let imgWidth = availableWidth;
+        let imgHeight = imgWidth / ratio;
+        
+        // Si l'image est trop haute, ajuster par la hauteur
+        if (imgHeight > availableHeight) {
+          imgHeight = availableHeight;
+          imgWidth = imgHeight * ratio;
+        }
+        
+        // Centrer l'image sur la page
+        const xPos = (pdfWidth - imgWidth) / 2;
+        const yPos = margin;
+        
+        // Créer le PDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4',
+          compress: true
+        });
+        
+        // Convertir le canvas en image et l'ajouter au PDF
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST');
+        
+        // Télécharger le PDF
+        const filename = `${pdfButton.dataset.filename || 'CV'}.pdf`;
+        pdf.save(filename);
+        
+        console.log("[pdf] ✓ PDF généré avec succès - 1 page A4 en mode light");
+        
+      } catch (error) {
+        console.error("[pdf] ✗ Erreur lors de la génération:", error);
+        
+        // Restaurer le thème même en cas d'erreur
+        if (wasDarkMode) {
+          applyTheme(true);
+        }
+        if (controls) {
+          controls.style.display = '';
+        }
+        
+        alert('Erreur lors de la génération du PDF. Veuillez réessayer.');
+      } finally {
+        // Restaurer le bouton
+        setTimeout(() => {
+          pdfButton.classList.remove("downloading");
+          pdfButtonText.textContent = originalText;
+          pdfButton.disabled = false;
+        }, 500);
+      }
+    });
+  }
+
+  // 7) Fonction d'application de la langue
   function applyLang(lang) {
     try {
       const dict = (cfg && cfg.i18n && cfg.i18n[lang]) || {};
@@ -127,8 +310,6 @@
           </div>
         `).join('');
         console.log(`[i18n] ${dict.skills_items.length} compétences chargées en ${lang}`);
-      } else {
-        console.warn('[i18n] skills_items non trouvé ou invalide');
       }
 
       // --- Rendu dynamique des EXPÉRIENCES ---
@@ -136,15 +317,13 @@
       if (expContainer && Array.isArray(dict.experience_items)) {
         expContainer.innerHTML = dict.experience_items.map(exp => `
           <div class="job">
-            <h3>${exp.title} — <a href="${exp.link}" target="_blank">${exp.company}</a>
+            <h3>${exp.title} – <a href="${exp.link}" target="_blank">${exp.company}</a>
             <span class="where"> (${exp.years})</span></h3>
             <ul>${exp.details.map(d => `<li>${d}</li>`).join("")}</ul>
           </div>
         `).join("") + `
         <p style="color:var(--muted); font-size:12px; margin-top:3px;">${dict.experience_footer || ""}</p>`;
         console.log(`[i18n] ${dict.experience_items.length} expériences chargées en ${lang}`);
-      } else {
-        console.warn('[i18n] experience_items non trouvé ou invalide');
       }
 
       // --- Rendu dynamique des PROJETS ---
@@ -157,8 +336,6 @@
           </div>
         `).join('');
         console.log(`[i18n] ${dict.projects_items.length} projets chargés en ${lang}`);
-      } else {
-        console.warn('[i18n] projects_items non trouvé ou invalide');
       }
 
       // --- Rendu dynamique de l'ÉDUCATION ---
@@ -184,7 +361,7 @@
       const sel = document.getElementById("lang-select");
       if (sel && sel.value !== lang) sel.value = lang;
       
-      // Mettre à jour l'URL avec le paramètre lang (sans recharger la page)
+      // Mettre à jour l'URL avec le paramètre lang
       const url = new URL(window.location);
       url.searchParams.set('lang', lang);
       window.history.replaceState({}, '', url);
@@ -196,28 +373,25 @@
     }
   }
 
-  // 7) Initialisation + écouteur du sélecteur
-  
-  // Lire les paramètres depuis l'URL
+  // 8) Initialisation
   const urlParams = new URLSearchParams(window.location.search);
   const langFromUrl = urlParams.get('lang');
   const isPrintMode = urlParams.get('print') === 'true';
   
-  // Si mode impression, masquer le sélecteur de langue
+  // Si mode impression, masquer les contrôles
   if (isPrintMode) {
-    const langSelector = document.querySelector('.controls-floating');
-    if (langSelector) {
-      langSelector.style.display = 'none';
-      langSelector.style.visibility = 'hidden';
-      langSelector.style.opacity = '0';
+    const controls = document.querySelector('.controls-floating');
+    if (controls) {
+      controls.style.display = 'none';
+      controls.style.visibility = 'hidden';
+      controls.style.opacity = '0';
     }
-    console.log('[i18n] Mode impression activé - sélecteur masqué');
+    console.log('[i18n] Mode impression activé - contrôles masqués');
   }
   
   // Priorité : URL > localStorage > config.yml
   const initial = langFromUrl || localStorage.getItem("cv-lang") || cfg.lang || "fr";
   
-  // Si la langue vient de l'URL, la sauvegarder dans localStorage
   if (langFromUrl) {
     localStorage.setItem("cv-lang", langFromUrl);
     console.log(`[i18n] Langue définie via URL : ${langFromUrl}`);
@@ -226,10 +400,8 @@
   if (sel) {
     sel.value = initial;
     sel.addEventListener("change", (e) => applyLang(e.target.value));
-  } else {
-    console.warn('[i18n] Sélecteur "#lang-select" introuvable dans le DOM.');
   }
 
-  // Applique tout de suite la langue initiale (DOM + config présents)
+  // Applique la langue initiale
   applyLang(initial);
 })();

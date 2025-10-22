@@ -21,6 +21,10 @@
   /* Tags/Chips */
   --tag-bg: var(--so-blue-light);
   --tag-border: var(--so-blue-border);
+
+  --ctrl-h: 34px; 
+  --ctrl-r: 8px;
+
 }
 
 /* ===========================
@@ -53,6 +57,7 @@ a:hover {
   max-width: 1024px;
   margin: 28px auto 48px;
   padding: 0 24px;
+  min-height: 100vh;
 }
 
 /* ===========================
@@ -103,7 +108,7 @@ header {
   max-width: calc(63% + 12px);
 }
 
-/* Mode dark pour contact-box - aucun background */
+/* Mode dark pour contact-box */
 .theme-dark .contact-box {
   background: transparent;
 }
@@ -134,55 +139,71 @@ header {
 }
 
 /* ===========================
-   SÉLECTEUR DE LANGUE - Badge flottant
+   BADGE FLOTTANT VERTICAL - Langue + Thème | PDF en dessous
    =========================== */
-.lang-floating {
+
+.controls-floating {
   position: fixed;
   bottom: 24px;
   right: 24px;
   z-index: 1000;
+  
+  /* Layout vertical */
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 8px;
+  
+  will-change: transform;
+  transform: translateZ(0);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Mode dark pour le badge */
-.theme-dark .lang-floating {
+.theme-dark .controls-floating {
   background: #2a2d31;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.lang-floating:hover {
-  transform: translateY(-2px);
+.controls-floating:hover {
+  transform: translateY(-2px) translateZ(0);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
-.theme-dark .lang-floating:hover {
+.theme-dark .controls-floating:hover {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
-/* Classe utilitaire pour masquer à l'impression (utilisée par pdfcrowd et autres) */
-.no-print {
-  /* Cette classe sera ciblée par les outils de conversion PDF */
+/* Première ligne : Langue + Thème */
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Masquage pour impression et conversion PDF */
-@media print {
-  .lang-floating,
-  .no-print {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    position: absolute !important;
-    left: -9999px !important;
-    width: 0 !important;
-    height: 0 !important;
-  }
+/* Séparateur vertical (entre langue et thème) */
+.separator {
+  width: 1px;
+  height: 24px;
+  background: var(--line);
+  margin: 0 4px;
 }
 
-.lang-floating select {
+/* Séparateur horizontal (entre les lignes) */
+.separator-horizontal {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  margin: 8px 0;
+}
+
+/* ===========================
+   SÉLECTEUR DE LANGUE
+   =========================== */
+.controls-floating select {
   appearance: none;
   background: var(--tag-bg);
   border: 1px solid var(--tag-border);
@@ -195,20 +216,182 @@ header {
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
+  transition: all 0.2s ease;
+  text-align: center;
+  text-align-last: center;
 }
 
-/* Icône adaptée au mode dark */
-.theme-dark .lang-floating select {
+.theme-dark .controls-floating select {
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ccc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
-.lang-floating select:hover {
+.controls-floating select:hover {
   background: #f8f9fb;
   border-color: var(--so-blue-border);
 }
 
-.theme-dark .lang-floating select:hover {
+.theme-dark .controls-floating select:hover {
   background: #3a3d41;
+}
+
+.controls-floating select:focus {
+  outline: 2px solid var(--so-blue);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   BOUTON TOGGLE THÈME
+   =========================== */
+#theme-toggle {
+  appearance: none;
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+}
+
+#theme-toggle:hover {
+  background: #f8f9fb;
+  border-color: var(--so-blue-border);
+  transform: scale(1.05);
+}
+
+.theme-dark #theme-toggle:hover {
+  background: #3a3d41;
+}
+
+#theme-toggle:focus {
+  outline: 2px solid var(--so-blue);
+  outline-offset: 2px;
+}
+
+#theme-toggle:active {
+  transform: scale(0.95);
+}
+
+#theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  transition: all 0.3s ease;
+}
+
+.sun-icon { display: block; }
+.moon-icon { display: none; }
+.theme-dark .sun-icon { display: none; }
+.theme-dark .moon-icon { display: block; }
+
+#theme-toggle.toggling {
+  animation: rotate-icon 0.4s ease;
+}
+
+/* @keyframes rotate-icon {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg) scale(0.9); }
+  100% { transform: rotate(360deg); }
+} */
+
+/* Animation keyframes */
+@keyframes blink-theme {
+  0% { opacity: 1; }
+  25% { opacity: 0.4; }
+  50% { opacity: 1; }
+  75% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* Quand on clique sur le bouton : déclenche le clignotement */
+#theme-toggle:active svg,
+html.dark-mode #theme-toggle svg {
+  animation: blink-theme 0.8s ease-in-out;
+}
+
+/* ===========================
+   BOUTON PDF - PLEINE LARGEUR AVEC TEXTE
+   =========================== */
+.pdf-button-full {
+  appearance: none;
+  background: var(--so-orange);
+  border: 1px solid var(--so-orange);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: system-ui, -apple-system, sans-serif;
+  
+  width: 100%;
+  min-height: 36px;
+  
+  transition: all 0.2s ease;
+}
+
+.pdf-button-full:hover {
+  background: var(--so-orange);
+  border-color: var(--so-orange);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(75, 131, 82, 0.3);
+}
+
+.theme-dark .pdf-button-full {
+  background: var(--so-orange);
+  border-color: var(--so-orange);
+}
+
+.theme-dark .pdf-button-full:hover {
+  background: var(--so-orange);
+  box-shadow: 0 2px 8px rgba(107, 201, 126, 0.3);
+}
+
+.pdf-button-full:focus {
+  outline: 2px solid var(--so-orange);
+  outline-offset: 2px;
+}
+
+.pdf-button-full:active {
+  transform: translateY(0);
+}
+
+.pdf-button-full svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+.pdf-button-full span {
+  white-space: nowrap;
+}
+
+/* Animation lors du téléchargement */
+.pdf-button-full.downloading {
+  animation: pulse-pdf 1s ease-in-out infinite;
+}
+
+@keyframes pulse-pdf {
+  0%, 100% { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: translateY(-1px);
+  }
 }
 
 /* ===========================
@@ -219,7 +402,7 @@ section {
 }
 
 section + section {
-  margin-top: 2px !important;
+  margin-top: 12px !important;
 }
 
 .section-head {
@@ -273,6 +456,7 @@ section + section {
   border-radius: 12px;
   padding: 12px;
   background: #fff;
+  transform: translateZ(0);
 }
 
 /* Mode dark pour les tiles */
@@ -351,11 +535,6 @@ section + section {
   font-size: 12px;
   margin-bottom: 8px;
   font-weight: 600;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ===========================
@@ -463,6 +642,54 @@ footer {
 }
 
 /* ===========================
+   FIX LIGHTHOUSE - CLS & Hauteurs minimales
+   =========================== */
+
+/* Hauteurs minimales pour éviter layout shifts */
+#skills-list { min-height: 380px; }
+#experience-list { min-height: 420px; }
+#projects-list { min-height: 180px; }
+#education-list { min-height: 80px; }
+
+/* Skeleton loader */
+#skills-list:empty::after,
+#experience-list:empty::after,
+#projects-list:empty::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--line) 25%, #e8ebee 50%, var(--line) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 12px;
+  will-change: background-position;
+  transform: translateZ(0);
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Mode dark pour skeleton */
+.theme-dark #skills-list:empty::after,
+.theme-dark #experience-list:empty::after,
+.theme-dark #projects-list:empty::after {
+  background: linear-gradient(90deg, #3a3d41 25%, #4a4d51 50%, #3a3d41 75%);
+  background-size: 200% 100%;
+}
+
+/* Préférence de mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===========================
    RESPONSIVE - TABLETTE
    =========================== */
 @media screen and (max-width: 900px) {
@@ -482,6 +709,10 @@ footer {
     order: -1;
     justify-self: start;
   }
+  
+  /* Hauteurs minimales ajustées */
+  #skills-list { min-height: 580px; }
+  #projects-list { min-height: 360px; }
 }
 
 /* ===========================
@@ -492,10 +723,55 @@ footer {
     grid-template-columns: 1fr;
   }
   
-  .lang-floating {
+  .controls-floating {
     bottom: 16px;
     right: 16px;
+    padding: 6px;
   }
+  
+  .controls-row {
+    gap: 6px;
+  }
+  
+  .controls-floating select {
+    padding: 5px 24px 5px 8px;
+    font-size: 12px;
+  }
+  
+  #theme-toggle {
+    width: 32px;
+    height: 32px;
+    padding: 5px;
+  }
+  
+  #theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .separator {
+    height: 20px;
+  }
+  
+  .separator-horizontal {
+    margin: 6px 0;
+  }
+  
+  .pdf-button-full {
+    padding: 6px 10px;
+    font-size: 12px;
+    min-height: 32px;
+  }
+  
+  .pdf-button-full svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Hauteurs minimales ajustées pour mobile */
+  #skills-list { min-height: 1100px; }
+  #projects-list { min-height: 540px; }
+  #experience-list { min-height: 500px; }
 }
 
 /* ===========================
@@ -505,6 +781,12 @@ footer {
   @page {
     size: A4;
     margin: 10mm;
+  }
+  
+  /* Couleurs précises à l'impression */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
   
   /* Layout général */
@@ -539,12 +821,6 @@ footer {
   header, .contact-box {
     break-inside: avoid;
     page-break-inside: avoid;
-  }
-  
-  /* Couleurs précises à l'impression */
-  * {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
   
   /* Layout deux colonnes */
@@ -583,259 +859,75 @@ footer {
     border-color: #cdd6e0 !important;
   }
   
-  /* Masquer le sélecteur de langue */
-  .lang-floating {
+  /* Masquer les contrôles */
+  .controls-floating,
+  .no-print {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     position: absolute !important;
     left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
   }
 }
 
-/* Hauteurs minimales pour éviter les layout shifts */
-#skills-list { min-height: 380px; }
-#experience-list { min-height: 420px; }
-#projects-list { min-height: 180px; }
-#education-list { min-height: 80px; }
-.container { min-height: 100vh; }
-
-@media (max-width: 900px) {
-  #skills-list { min-height: 580px; }
-  #projects-list { min-height: 360px; }
+/* === Rangée contrôle Langue ↔ Thème : même largeur pour chacun = pas de "trou" === */
+:root{
+  --ctrl-h: 34px;   /* hauteur des contrôles (tu peux ajuster) */
+  --ctrl-r: 8px;    /* arrondi commun */
 }
 
-@media (max-width: 600px) {
-  #skills-list { min-height: 1100px; }
-  #projects-list { min-height: 540px; }
-  #experience-list { min-height: 500px; }
-}
-/* ===========================
-   FIX LIGHTHOUSE - CLS & Animations
-   Ajouté automatiquement par optimize.sh
-   =========================== */
-
-/* Hauteurs minimales pour éviter layout shifts */
-#skills-list { min-height: 380px; }
-#experience-list { min-height: 420px; }
-#projects-list { min-height: 180px; }
-#education-list { min-height: 80px; }
-.container { min-height: 100vh; }
-
-/* Optimisation GPU pour animations */
-.lang-floating {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-.lang-floating:hover {
-  transform: translateY(-2px) translateZ(0);
-}
-
-/* Skeleton loader */
-#skills-list:empty::after,
-#experience-list:empty::after,
-#projects-list:empty::after {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, var(--line) 25%, #e8ebee 50%, var(--line) 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s ease-in-out infinite;
-  border-radius: 12px;
-  will-change: background-position;
-  transform: translateZ(0);
-}
-
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  #skills-list { min-height: 580px; }
-  #projects-list { min-height: 360px; }
-}
-
-@media (max-width: 600px) {
-  #skills-list { min-height: 1100px; }
-  #projects-list { min-height: 540px; }
-  #experience-list { min-height: 500px; }
-}
-
-/* Préférence de mouvement réduit */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ===========================
-   BADGE FLOTTANT - Langue + Thème
-   Ajouté par install-theme-toggle.sh
-   =========================== */
-
-.controls-floating {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 1000;
-  
-  display: flex;
+/* La rangée a 3 colonnes : [ langue | séparateur | thème ] avec 1fr de part et d’autre */
+.controls-row{
+  display: grid;
+  grid-template-columns: 1fr 10px 1fr;  /* 1fr pour la langue, 10px de séparateur, 1fr pour le thème */
   align-items: center;
-  gap: 8px;
-  
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 8px;
-  
-  will-change: transform;
-  transform: translateZ(0);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  gap: 0; /* on gère l’espace avec le séparateur */
 }
 
-.theme-dark .controls-floating {
-  background: #2a2d31;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-.controls-floating:hover {
-  transform: translateY(-2px) translateZ(0);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-.theme-dark .controls-floating:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-}
-
-.separator {
+/* Le séparateur vertical */
+.controls-row .separator{
   width: 1px;
-  height: 24px;
+  height: calc(var(--ctrl-h) * 0.72);
   background: var(--line);
-  margin: 0 4px;
+  justify-self: center;
+  border-radius: 1px;
 }
 
-.controls-floating select {
-  appearance: none;
-  background: var(--tag-bg);
-  border: 1px solid var(--tag-border);
-  border-radius: 8px;
-  padding: 6px 26px 6px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23444' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  transition: all 0.2s ease;
+/* Sélecteur de langue — prend 100% de sa colonne (1fr) */
+.controls-row select{
+  height: var(--ctrl-h);
+  border-radius: var(--ctrl-r);
+  width: 100%;
+  padding: 0 26px 0 10px;                 /* pas de padding vertical → parfait alignement */
+  line-height: calc(var(--ctrl-h) - 2px); /* vertical align */
+  text-align: center;                      /* texte centré */
+  text-align-last: center;                 /* option sélectionnée centrée */
 }
 
-.theme-dark .controls-floating select {
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ccc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-}
-
-.controls-floating select:hover {
-  background: #f8f9fb;
-  border-color: var(--so-blue-border);
-}
-
-.theme-dark .controls-floating select:hover {
-  background: #3a3d41;
-}
-
-.controls-floating select:focus {
-  outline: 2px solid var(--so-blue);
-  outline-offset: 2px;
-}
-
-#theme-toggle {
-  appearance: none;
-  background: var(--tag-bg);
-  border: 1px solid var(--tag-border);
-  border-radius: 8px;
-  padding: 6px 8px;
-  cursor: pointer;
+/* Bouton thème — prend 100% de sa colonne (1fr) */
+#theme-toggle{
+  width: 100% !important;                 /* remplace l’ancienne largeur fixe */
+  height: var(--ctrl-h) !important;
+  border-radius: var(--ctrl-r) !important;
+  padding: 0 !important;
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: var(--ink);
-  transition: all 0.2s ease;
-  width: 36px;
-  height: 36px;
+  justify-content: center;                /* icône centrée */
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
+  transition: background .2s ease, border-color .2s ease;
+}
+#theme-toggle:hover{ background: var(--so-blue-light); }
+
+#theme-toggle svg{
+  width: 16px; height: 16px; fill: var(--ink);
 }
 
-#theme-toggle:hover {
-  background: #f8f9fb;
-  border-color: var(--so-blue-border);
-  transform: scale(1.05);
-}
-
-.theme-dark #theme-toggle:hover {
-  background: #3a3d41;
-}
-
-#theme-toggle:focus {
-  outline: 2px solid var(--so-blue);
-  outline-offset: 2px;
-}
-
-#theme-toggle:active {
-  transform: scale(0.95);
-}
-
-#theme-toggle svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-  transition: all 0.3s ease;
-}
-
-.sun-icon { display: block; }
-.moon-icon { display: none; }
-.theme-dark .sun-icon { display: none; }
-.theme-dark .moon-icon { display: block; }
-
-#theme-toggle.toggling {
-  animation: rotate-icon 0.4s ease;
-}
-
-@keyframes rotate-icon {
-  0% { transform: rotate(0deg); }
-  50% { transform: rotate(180deg) scale(0.9); }
-  100% { transform: rotate(360deg); }
-}
-
-@media screen and (max-width: 600px) {
-  .controls-floating {
-    bottom: 16px;
-    right: 16px;
-    padding: 6px;
-    gap: 6px;
-  }
-  
-  .controls-floating select {
-    padding: 5px 24px 5px 8px;
-    font-size: 12px;
-  }
-  
-  #theme-toggle {
-    width: 32px;
-    height: 32px;
-    padding: 5px;
-  }
-  
-  #theme-toggle svg {
-    width: 16px;
-    height: 16px;
-  }
-  
-  .separator {
-    height: 20px;
-  }
+/* Version mobile un poil plus compacte */
+@media (max-width: 600px){
+  :root{ --ctrl-h: 32px; }
+  #theme-toggle svg{ width: 15px; height: 15px; 
+ }
 }
