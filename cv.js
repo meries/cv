@@ -242,7 +242,7 @@
     
     // Gestionnaire de clic avec jsPDF + html2canvas optimisé (FORCE MODE LIGHT)
     pdfButton.addEventListener("click", async () => {
-      console.log("[pdf] Génération du PDF avec jsPDF + html2canvas...");
+      console.log("[pdf] Génération du PDF avec jsPDF + html2canvas HAUTE QUALITÉ...");
       
       // Animation du bouton et changement de texte
       pdfButton.classList.add("downloading");
@@ -279,12 +279,12 @@
       // Délai plus long pour laisser le navigateur recalculer tous les styles
       await new Promise(resolve => setTimeout(resolve, 500));
         
-        console.log("[pdf] Génération du PDF en mode light");
+        console.log("[pdf] Génération du PDF en mode light HAUTE QUALITÉ");
         
-        // Configuration optimale pour html2canvas
+        // Configuration OPTIMISÉE pour HAUTE QUALITÉ
         const canvas = await html2canvas(element, {
-          scale: 2, // Haute résolution
-          useCORS: true, // Pour charger les images externes (Gravatar)
+          scale: 4, // TRÈS HAUTE RÉSOLUTION (x4 au lieu de x2)
+          useCORS: true,
           logging: false,
           backgroundColor: '#ffffff',
           windowWidth: element.scrollWidth,
@@ -292,8 +292,31 @@
           scrollY: -window.scrollY,
           scrollX: -window.scrollX,
           imageTimeout: 0,
-          allowTaint: true
+          allowTaint: true,
+          // Options supplémentaires pour améliorer la qualité
+          letterRendering: true, // Améliore le rendu du texte
+          removeContainer: false,
+          foreignObjectRendering: false, // Meilleur rendu des polices
+          onclone: (clonedDoc) => {
+            // Forcer le rendu optimal des polices et des images
+            const style = clonedDoc.createElement('style');
+            style.textContent = `
+              * {
+                -webkit-font-smoothing: antialiased !important;
+                -moz-osx-font-smoothing: grayscale !important;
+                text-rendering: optimizeLegibility !important;
+                image-rendering: -webkit-optimize-contrast !important;
+                image-rendering: crisp-edges !important;
+              }
+              img {
+                image-rendering: high-quality !important;
+              }
+            `;
+            clonedDoc.head.appendChild(style);
+          }
         });
+        
+        console.log(`[pdf] Canvas généré: ${canvas.width}x${canvas.height}px (scale 4)`);
         
         // Restaurer les contrôles
         if (controls) {
@@ -334,24 +357,28 @@
         const xPos = (pdfWidth - imgWidth) / 2;
         const yPos = margin;
         
-        // Créer le PDF
+        // Créer le PDF SANS COMPRESSION
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({
           orientation: 'portrait',
           unit: 'mm',
           format: 'a4',
-          compress: true
+          compress: false, // DÉSACTIVER LA COMPRESSION pour meilleure qualité
+          precision: 16, // Précision maximale
+          userUnit: 1.0
         });
         
-        // Convertir le canvas en image et l'ajouter au PDF
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        pdf.addImage(imgData, 'JPEG', xPos, yPos, imgWidth, imgHeight, '', 'FAST');
+        // Convertir le canvas en PNG (meilleure qualité que JPEG)
+        const imgData = canvas.toDataURL('image/png'); // PNG au lieu de JPEG
+        
+        // Ajouter l'image au PDF avec alias NONE pour désactiver l'anti-aliasing
+        pdf.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, undefined, 'NONE');
         
         // Télécharger le PDF
         const filename = `${pdfButton.dataset.filename || 'CV'}.pdf`;
         pdf.save(filename);
         
-        console.log("[pdf] ✓ PDF généré avec succès - 1 page A4 en mode light");
+        console.log("[pdf] ✓ PDF HAUTE QUALITÉ généré avec succès (PNG, scale x4, sans compression)");
         
       } catch (error) {
         console.error("[pdf] ✗ Erreur lors de la génération:", error);
