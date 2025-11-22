@@ -157,7 +157,7 @@ i18n:
       - title: "Migration AWS (AVIV)"
         description: "Migration des environnements Orange Cloud vers AWS : CloudFront / Load Balancer + ECS ou Lambda, Jenkins, Solr, RDS Aurora et réseau (VPC, SG, routage)."
       - title: "Migration AWS (ADNOV)"
-        description: "Conception et migration de l'infrastructure hébergée chez IBM vers AWS, incluant la construction de la Landing Zone (avec SETRA) et la standardisation des services."
+        description: "Conception et migration de l'infrastructure hébergée chez IBM vers AWS, incluant la construction de la Landing Zone et la standardisation des services."
 
     education: "FORMATIONS & LANGUES"
     education_items:
@@ -279,7 +279,7 @@ i18n:
       - title: "AWS Migration (AVIV)"
         description: "Migration of Orange Cloud environments to AWS: CloudFront / Load Balancer + ECS or Lambda, Jenkins, Solr, RDS Aurora and network (VPC, SG, routing)."
       - title: "AWS Migration (ADNOV)"
-        description: "Design and migration of IBM-hosted infrastructure to AWS, including Landing Zone construction (with SETRA) and service standardization."
+        description: "Design and migration of IBM-hosted infrastructure to AWS, including Landing Zone construction and service standardization."
 
     education: "EDUCATION & LANGUAGES"
     education_items:
